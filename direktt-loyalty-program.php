@@ -1,20 +1,43 @@
 <?php
 
-// Plugin Name: Direktt Loyalty Program
+/**
+ * Plugin Name: Direktt Loyalty Program
+ * Description: Direktt Loyalty Program Direktt Plugin
+ * Version: 1.0.0
+ * Author: Direktt
+ * Author URI: https://direktt.com/
+ * License: GPL2
+ */
 
-register_activation_hook(__FILE__, 'direktt_loyalty_program_activation_check');
+// If this file is called directly, abort.
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+
+add_action( 'plugins_loaded', 'direktt_loyalty_program_activation_check', -20 );
+
 function direktt_loyalty_program_activation_check() {
-    if (!function_exists('is_plugin_active')) {
+    if ( ! function_exists( 'is_plugin_active' ) ) {
         require_once ABSPATH . 'wp-admin/includes/plugin.php';
     }
+
     $required_plugin = 'direktt-plugin/direktt.php';
-    if (!is_plugin_active($required_plugin)) {
-        deactivate_plugins(plugin_basename(__FILE__));
-        wp_die(
-            esc_html__('Direktt Loyalty Program requires the Direktt Plugin to be active. Please activate Direktt Plugin first.', 'direktt-loyalty-program'),
-            esc_html__('Plugin Activation Error', 'direktt-loyalty-program'),
-            array('back_link' => true)
-        );
+
+    if ( ! is_plugin_active( $required_plugin ) ) {
+        add_action( 'after_plugin_row_direktt-loyalty-program/direktt-loyalty-program.php', function ( $plugin_file, $plugin_data, $status ) {
+            $colspan = 3;
+            ?>
+            <tr class="plugin-update-tr">
+                <td colspan="<?php echo esc_attr( $colspan ); ?>" style="box-shadow: none;">
+                    <div style="color: #b32d2e; font-weight: bold;">
+                        <?php echo esc_html__( 'Direktt Loyalty Program requires the Direktt WordPress Plugin to be active. Please activate Direktt WordPress Plugin first.', 'direktt-loyalty-program' ); ?>
+                    </div>
+                </td>
+            </tr>
+            <?php
+        }, 10, 3);
+
+        deactivate_plugins( plugin_basename( __FILE__ ) );
     }
 }
 
