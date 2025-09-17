@@ -502,62 +502,71 @@ function render_loyalty_program_tool() {
             });
         });
     </script>
-    <div class="loyalty-program-confirm loyalty-program-popup">
+    <?php
+    echo Direktt_Public::direktt_render_confirm_popup('', 'Placeholder text, Lorem Ipsum');
+    echo Direktt_Public::direktt_render_alert_popup('', 'Placeholder text, Lorem Ipsum');
+    echo Direktt_Public::direktt_render_loader('Placeholder text, Lorem Ipsum');
+    ?>
+    <!-- <div class="loyalty-program-confirm loyalty-program-popup">
         <div class="loyalty-program-confirm-content loyalty-program-popup-content">
             <div class="loyalty-program-confirm-header">
-                <h3><?php echo esc_html__( 'Confirm', 'direktt' ); ?></h3>    
+                <h3><?php /* echo esc_html__( 'Confirm', 'direktt' ); */ ?></h3>    
             </div>
             <div class="loyalty-program-confirm-text">
-                <p><?php echo esc_html__( 'Are you sure you that you want to', 'direktt' ); ?> <span class="points"></span> <?php echo esc_html__( 'points.', 'direktt' ); ?></p>
+                <p><?php /* echo esc_html__( 'Are you sure you that you want to', 'direktt' ); */ ?> <span class="points"></span> <?php /* echo esc_html__( 'points.', 'direktt' ); */ ?></p>
             </div>
             <div class="loyalty-program-confirm-actions">
-                <button id="loyalty-program-confirm-yes"><?php echo esc_html__( 'Yes', 'direktt' ); ?></button>
-                <button class="loyalty-program-confirm-no"><?php echo esc_html__( 'No', 'direktt' ); ?></button>
+                <button id="loyalty-program-confirm-yes"><?php /* echo esc_html__( 'Yes', 'direktt' ); */ ?></button>
+                <button class="loyalty-program-confirm-no"><?php /* echo esc_html__( 'No', 'direktt' ); */ ?></button>
             </div>
         </div>
     </div>
     <div class="loyalty-program-reset loyalty-program-popup">
         <div class="loyalty-program-reset-content loyalty-program-popup-content">
             <div class="loyalty-program-reset-header">
-                <h3><?php echo esc_html__( 'Confirm', 'direktt' ); ?></h3>    
+                <h3><?php /* echo esc_html__( 'Confirm', 'direktt' ); */ ?></h3>    
             </div>
             <div class="loyalty-program-reset-text">
-                <p><?php echo esc_html__( 'Are you sure that you want to reset the points.', 'direktt' ); ?></p>
+                <p><?php /* echo esc_html__( 'Are you sure that you want to reset the points.', 'direktt' ); */ ?></p>
             </div>
             <div class="loyalty-program-reset-actions">
-                <button id="loyalty-program-reset-yes"><?php echo esc_html__( 'Yes', 'direktt' ); ?></button>
-                <button class="loyalty-program-reset-no"><?php echo esc_html__( 'No', 'direktt' ); ?></button>
+                <button id="loyalty-program-reset-yes"><?php /* echo esc_html__( 'Yes', 'direktt' ); */ ?></button>
+                <button class="loyalty-program-reset-no"><?php /* echo esc_html__( 'No', 'direktt' ); */ ?></button>
             </div>
         </div>
     </div>
     <div id="direktt-loader-overlay">
         <div id="direktt-loader-container">
-            <p id="direktt-loader-text"><?php echo esc_html__( 'Don\'t refresh the page', 'direktt' ); ?></p>
+            <p id="direktt-loader-text"><?php /* echo esc_html__( 'Don\'t refresh the page', 'direktt' ); */ ?></p>
             <div id="direktt-loader"></div>
         </div>
-    </div>
-    <div class="wrap">
+    </div> -->
+    <div class="direktt-loyalty-program-wrap">
         <h2><?php echo esc_html__('Loyalty Program', 'direktt'); ?></h2>
         <p><?php echo esc_html__('Current Points:', 'direktt'); ?> <strong><?php echo esc_html($user_points); ?></strong></p>
         <form method="post">
-            <?php wp_nonce_field('direktt_loyalty_points_action', 'direktt_loyalty_points_nonce'); ?>
-            <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:16px;">
-                <?php
-                // Filter and sort rules descending for minus buttons
-                $rules = array_filter(array_map('intval', $points_rules), function($v){ return $v > 0; });
-                rsort($rules, SORT_NUMERIC);
-                foreach ($rules as $rule): ?>
-                    <button name="points_change_btn" value="-<?php echo esc_attr( $rule ); ?>" class="button-red">-<?php echo esc_html( $rule ); ?></button>
-                <?php endforeach; ?>
-
-                <?php
-                // Sort rules ascending for plus buttons
-                $rules_asc = $rules;
-                sort($rules_asc, SORT_NUMERIC);
-                foreach ($rules_asc as $rule): ?>
-                    <button name="points_change_btn" value="<?php echo esc_attr( $rule ); ?>" class="button-green">+<?php echo esc_html( $rule ); ?></button>
+            <?php
+            wp_nonce_field('direktt_loyalty_points_action', 'direktt_loyalty_points_nonce');
+            // Filter and sort rules descending for minus buttons
+            $rules = array_filter(array_map('intval', $points_rules), function($v){ return $v > 0; });
+            if ( ! empty($rules) ) {
+                ?>
+                <div class="direktt-loyalty-program-rules" style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:16px;">
+                    <?php
+                    rsort($rules, SORT_NUMERIC);
+                    foreach ($rules as $rule): ?>
+                        <button name="points_change_btn" value="-<?php echo esc_attr( $rule ); ?>" class="button-red">-<?php echo esc_html( $rule ); ?></button>
                     <?php endforeach; ?>
+
+                    <?php
+                    // Sort rules ascending for plus buttons
+                    $rules_asc = $rules;
+                    sort($rules_asc, SORT_NUMERIC);
+                    foreach ($rules_asc as $rule): ?>
+                        <button name="points_change_btn" value="<?php echo esc_attr( $rule ); ?>" class="button-green">+<?php echo esc_html( $rule ); ?></button>
+                        <?php endforeach; ?>
                 </div>
+            <?php } ?>
             <button name="reset_points_btn" id="reset_points_btn" class="button-green"><?php echo esc_html__( 'Reset points', 'direktt' ); ?></button>
         </form>
         <?php
@@ -567,14 +576,14 @@ function render_loyalty_program_tool() {
         }
         
         if ( empty( $transactions ) ) {
-            echo '<div class="transactions">';
+            echo '<div class="direktt-loyalty-program-transactions">';
             echo '<h4>' . esc_html__('Recent Transactions', 'direktt') . '</h4>';
             echo '<p>' . esc_html__('No transactions found.', 'direktt') . '</p>';
             echo '</div>';
         } else {
             $transactions = array_reverse($transactions);
             $transactions = array_slice($transactions, 0, 20);
-            echo '<div class="transactions">';
+            echo '<div class="direktt-loyalty-program-transactions">';
             echo '<h4>' . esc_html__('Recent Transactions', 'direktt') . '</h4>';
             echo '<ul>';
             foreach ($transactions as $transaction) {
