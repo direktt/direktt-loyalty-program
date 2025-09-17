@@ -551,7 +551,7 @@ function render_loyalty_program_tool() {
             $rules = array_filter(array_map('intval', $points_rules), function($v){ return $v > 0; });
             if ( ! empty($rules) ) {
                 ?>
-                <div class="direktt-loyalty-program-rules" style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:16px;">
+                <div class="direktt-loyalty-program-rules">
                     <?php
                     rsort($rules, SORT_NUMERIC);
                     foreach ($rules as $rule): ?>
