@@ -165,11 +165,11 @@ function render_loyalty_program_settings() {
                             var pointsRules = <?php echo json_encode(get_option('direktt_loyalty_points_rules', [])); ?>;
                             function renderRule(index, value) {
                                 return `
-                                <div class="points-rule" style="margin-bottom:8px;">
+                                <div class="direktt-loyalty-program-points-rule" style="margin-bottom:8px;">
                                     <label>
                                         <input type="number" name="direktt_loyalty_points_rules[]" value="${value ? value : 1}" placeholder="Points" min="1" />
                                     </label>
-                                    <button type="button" class="button remove_points_rule">Remove</button>
+                                    <button type="button" class="button direktt_loyalty_program_remove_points_rule">Remove</button>
                                 </div>`;
                             }
                             function refreshRules() {
@@ -187,9 +187,9 @@ function render_loyalty_program_settings() {
                                     e.preventDefault();
                                     $('#direktt_points_repeater').append(renderRule('', ''));
                                 });
-                                $('#direktt_points_repeater').on('click', '.remove_points_rule', function(e){
+                                $('#direktt_points_repeater').on('click', '.direktt_loyalty_program_remove_points_rule', function(e){
                                     e.preventDefault();
-                                    $(this).closest('.points-rule').remove();
+                                    $(this).closest('.direktt-loyalty-program-points-rule').remove();
                                 });
                             });
                         })(jQuery);
@@ -448,23 +448,27 @@ function render_loyalty_program_tool() {
             $( 'button[name="points_change_btn"]' ).on( 'click', function( e ) {
                 e.preventDefault();
                 var changeValue = $( this ).val();
-                $( '.loyalty-program-confirm' ).fadeIn();
-                $( '#loyalty-program-confirm-yes' ).data( 'change-value', changeValue );
+                $( '#direktt-loyalty-program-confirm' ).fadeIn();
+                $( '#direktt-loyalty-program-confirm .direktt-popup-yes' ).data( 'change-value', changeValue );
                 if ( changeValue < 0 ) {
-                    $( '.points' ).text( 'remove ' + Math.abs(changeValue) );
+                    $( '#direktt-loyalty-program-confirm .direktt-popup-text' ).text( $( '#direktt-loyalty-program-confirm .direktt-popup-text' ).text().replace( '__POINTS__' , '<?php echo esc_js( __( 'remove', 'direktt-loyalty-program' ) ); ?> ' + Math.abs(changeValue) ) );
                 } else {
-                    $( '.points' ).text( 'add ' + changeValue );
+                    $( '#direktt-loyalty-program-confirm .direktt-popup-text' ).text( $( '#direktt-loyalty-program-confirm .direktt-popup-text' ).text().replace( '__POINTS__' , '<?php echo esc_js( __( 'add', 'direktt-loyalty-program' ) ); ?> ' + changeValue ) );
                 }
             });
 
-            $(  '.loyalty-program-confirm-no' ).on( 'click', function() {
-                $( '.loyalty-program-confirm' ).fadeOut();
+            $(  '#direktt-loyalty-program-confirm .direktt-popup-no' ).on( 'click', function() {
+                $( '#direktt-loyalty-program-confirm' ).fadeOut();
+                setTimeout(function() {
+                    // Reset the confirmation text
+                    $( '#direktt-loyalty-program-confirm .direktt-popup-text' ).text( '<?php echo esc_js( __( 'Are you sure that you want to __POINTS__ points.', 'direktt-loyalty-program' ) ); ?>' );
+                }, 300);
             });
 
-            $( '#loyalty-program-confirm-yes' ).on( 'click', function() {
+            $( '#direktt-loyalty-program-confirm .direktt-popup-yes' ).on( 'click', function() {
                 var changeValue = $( this ).data( 'change-value' );
-                $( '.loyalty-program-confirm' ).fadeOut();
-                $( '#direktt-loader-overlay' ).fadeIn();
+                $( '#direktt-loyalty-program-confirm' ).fadeOut();
+                $( '.direktt-loader-overlay' ).fadeIn();
                 // Submit the form with the change value
                 $('<input>').attr({
                     type: 'hidden',
@@ -479,16 +483,16 @@ function render_loyalty_program_tool() {
 
             $( '#reset_points_btn' ).on( 'click', function( e ) {
                 e.preventDefault();
-                $( '.loyalty-program-reset' ).fadeIn();
+                $( '#direktt-loyalty-program-reset' ).fadeIn();
             });
 
-            $( '.loyalty-program-reset-no' ).on( 'click', function() {
-                $( '.loyalty-program-reset' ).fadeOut();
+            $( '#direktt-loyalty-program-reset .direktt-popup-no' ).on( 'click', function() {
+                $( '#direktt-loyalty-program-reset' ).fadeOut();
             });
 
-            $( '#loyalty-program-reset-yes' ).on( 'click', function() {
-                $( '.loyalty-program-reset' ).fadeOut();
-                $( '#direktt-loader-overlay' ).fadeIn();
+            $( '#direktt-loyalty-program-reset .direktt-popup-yes' ).on( 'click', function() {
+                $( '#direktt-loyalty-program-reset' ).fadeOut();
+                $( '.direktt-loader-overlay' ).fadeIn();
                 // Submit the form to reset points
                 $('<input>').attr({
                     type: 'hidden',
@@ -503,9 +507,10 @@ function render_loyalty_program_tool() {
         });
     </script>
     <?php
-    echo Direktt_Public::direktt_render_confirm_popup('', 'Placeholder text, Lorem Ipsum');
+    echo Direktt_Public::direktt_render_confirm_popup('direktt-loyalty-program-confirm', 'Are you sure that you want to __POINTS__ points.');
+    echo Direktt_Public::direktt_render_confirm_popup('direktt-loyalty-program-reset', 'Are you sure that you want to reset the points.');
     echo Direktt_Public::direktt_render_alert_popup('', 'Placeholder text, Lorem Ipsum');
-    echo Direktt_Public::direktt_render_loader('Placeholder text, Lorem Ipsum');
+    echo Direktt_Public::direktt_render_loader('Don\'t refresh the page');
     ?>
     <!-- <div class="loyalty-program-confirm loyalty-program-popup">
         <div class="loyalty-program-confirm-content loyalty-program-popup-content">
@@ -642,10 +647,10 @@ function render_loyalty_program_meta_box($post) {
     
     ?>
     <div class="direktt-loyalty-program-meta-box">
-        <div class="points">
+        <div class="direktt-loyalty-program-points">
             <p><?php echo esc_html__('Current Points: ', 'direktt') . '<strong>' . esc_html($user_points) . '</strong>'; ?></p>
         </div>
-        <div class="transactions">
+        <div class="direktt-loyalty-program-transactions">
             <h4><?php echo esc_html__('Recent Transactions', 'direktt'); ?></h4>
             <?php
             $transactions = get_post_meta($user_id, 'direktt_loyalty_transactions', true);
@@ -674,7 +679,6 @@ function render_loyalty_program_meta_box($post) {
             }
             ?>
         </div>
-        <!-- TODO pitanje da li ima smisla da i ovde postoje buttoni za smanjivanje/povecavanje -->
     </div>
     <?php
 }
@@ -694,10 +698,10 @@ function loyalty_program_service_shortcode() {
     if (!is_array($transactions)) {
         $transactions = [];
         echo '<div class="direktt-loyalty-program-service">';
-        echo '<div class="points">';
+        echo '<div class="direktt-loyalty-program-points">';
         echo '<p>' . esc_html__('Current Points: ', 'direktt') . '<strong>' . esc_html($points) . '</strong></p>';
         echo '</div>';
-        echo '<div class="transactions">';
+        echo '<div class="direktt-loyalty-program-transactions">';
         echo '<h4>' . esc_html__('Recent Transactions', 'direktt') . '</h4>';
         echo '<p>' . esc_html__('No transactions found.', 'direktt') . '</p>';
         echo '</div>';
@@ -707,10 +711,10 @@ function loyalty_program_service_shortcode() {
         $transactions = array_slice($transactions, 0, 20);
 
         echo '<div class="direktt-loyalty-program-service">';
-        echo '<div class="points">';
+        echo '<div class="direktt-loyalty-program-points">';
         echo '<p>' . esc_html__('Current Points: ', 'direktt') . '<strong>' . esc_html($points) . '</strong></p>';
         echo '</div>';
-        echo '<div class="transactions">';
+        echo '<div class="direktt-loyalty-program-transactions">';
         echo '<h4>' . esc_html__('Recent Transactions', 'direktt') . '</h4>';
         echo '<ul>';
         foreach ($transactions as $transaction) {
