@@ -448,7 +448,7 @@ function render_loyalty_program_tool() {
             $( 'button[name="points_change_btn"]' ).on( 'click', function( e ) {
                 e.preventDefault();
                 var changeValue = $( this ).val();
-                $( '#direktt-loyalty-program-confirm' ).fadeIn();
+                $( '#direktt-loyalty-program-confirm' ).addClass( 'direktt-popup-on' );
                 $( '#direktt-loyalty-program-confirm .direktt-popup-yes' ).data( 'change-value', changeValue );
                 if ( changeValue < 0 ) {
                     $( '#direktt-loyalty-program-confirm .direktt-popup-text' ).text( $( '#direktt-loyalty-program-confirm .direktt-popup-text' ).text().replace( '__POINTS__' , '<?php echo esc_js( __( 'remove', 'direktt-loyalty-program' ) ); ?> ' + Math.abs(changeValue) ) );
@@ -458,7 +458,7 @@ function render_loyalty_program_tool() {
             });
 
             $(  '#direktt-loyalty-program-confirm .direktt-popup-no' ).on( 'click', function() {
-                $( '#direktt-loyalty-program-confirm' ).fadeOut();
+                $( '#direktt-loyalty-program-confirm' ).removeClass( 'direktt-popup-on' );
                 setTimeout(function() {
                     // Reset the confirmation text
                     $( '#direktt-loyalty-program-confirm .direktt-popup-text' ).text( '<?php echo esc_js( __( 'Are you sure that you want to __POINTS__ points.', 'direktt-loyalty-program' ) ); ?>' );
@@ -467,7 +467,7 @@ function render_loyalty_program_tool() {
 
             $( '#direktt-loyalty-program-confirm .direktt-popup-yes' ).on( 'click', function() {
                 var changeValue = $( this ).data( 'change-value' );
-                $( '#direktt-loyalty-program-confirm' ).fadeOut();
+                $( '#direktt-loyalty-program-confirm' ).removeClass( 'direktt-popup-on' );
                 $( '.direktt-loader-overlay' ).fadeIn();
                 // Submit the form with the change value
                 $('<input>').attr({
