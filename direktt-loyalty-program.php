@@ -495,15 +495,15 @@ function render_loyalty_program_tool()
 
             $('#reset_points_btn').on('click', function(e) {
                 e.preventDefault();
-                $('#direktt-loyalty-program-reset').fadeIn();
+                $('#direktt-loyalty-program-reset').addClass( 'direktt-popup-on' );
             });
 
             $('#direktt-loyalty-program-reset .direktt-popup-no').on('click', function() {
-                $('#direktt-loyalty-program-reset').fadeOut();
+                $('#direktt-loyalty-program-reset').removeClass('direktt-popup-on');
             });
 
             $('#direktt-loyalty-program-reset .direktt-popup-yes').on('click', function() {
-                $('#direktt-loyalty-program-reset').fadeOut();
+                $('#direktt-loyalty-program-reset').removeClass('direktt-popup-on');
                 $('.direktt-loader-overlay').fadeIn();
                 // Submit the form to reset points
                 $('<input>').attr({
@@ -560,7 +560,7 @@ function render_loyalty_program_tool()
     </div> -->
     <div class="direktt-loyalty-program-wrap">
         <h2><?php echo esc_html__('Loyalty Program', 'direktt-loyalty-program'); ?></h2>
-        <p><?php echo esc_html__('Current Points:', 'direktt-loyalty-program'); ?> <strong><?php echo esc_html($user_points); ?></strong></p>
+        <p><?php echo esc_html__('Points: ', 'direktt-loyalty-program'); ?> <strong><?php echo esc_html($user_points); ?></strong></p>
         <form method="post">
             <?php
             wp_nonce_field('direktt_loyalty_points_action', 'direktt_loyalty_points_nonce');
@@ -618,7 +618,8 @@ function render_loyalty_program_tool()
             echo '<tbody';
 
             foreach ($transactions as $transaction) {
-                $date = wp_date('Y-m-d H:i:s', $transaction['timestamp']);
+                // $date = wp_date('Y-m-d H:i:s', $transaction['timestamp']);
+                $date = human_time_diff( $transaction['timestamp']) . ' ago';
                 $change = $transaction['change'];
                 $new_balance = $transaction['new_balance'];
                 $admin_id = $transaction['admin_id'];
@@ -633,14 +634,14 @@ function render_loyalty_program_tool()
                 if ($change === 'reset') {
                     esc_html_e('Reset', 'direktt-loyalty-program');
                 } else {
-                    echo (($change > 0 ? '+' : '') . $change);
+                    echo ( '<strong>' . ($change > 0 ? '+' : '') . $change . '</strong>');
                 }
                 echo '</td>';
-                echo '<td>' . esc_html($date) . '</td>';
+                echo '<td>' . esc_html( $date ) . '</td>';
                 if (Direktt_User::is_direktt_admin()) {
-                    echo '<td>' . esc_html($display_name) . '</td>';
+                    echo '<td>' . esc_html( $display_name ) . '</td>';
                 }
-                echo '<td>' . esc_html(esc_html($new_balance)) . '</td>';
+                echo '<td>' . esc_html( esc_html( $new_balance )) . '</td>';
                 echo '</tr>';
             }
             echo '</tbody>';
@@ -712,11 +713,11 @@ function render_loyalty_program_meta_box($post)
 						$new_balance = $transaction['new_balance'];
 
 						echo '<tr>';
-						echo '<td>';
+						echo '<td class="direktt-loyalty-program-points">';
 						if ($change === 'reset') {
 							esc_html_e('Reset', 'direktt-loyalty-program');
 						} else {
-							echo (($change > 0 ? '+' : '') . $change);
+							echo ('<strong>' . ($change > 0 ? '+' : '') . $change . '</strong>');
 						}
 						echo '</td>';
 						echo '<td>' . esc_html($date) . '</td>';
@@ -786,7 +787,7 @@ function loyalty_program_service_shortcode()
             if ($change === 'reset') {
                 esc_html_e('Reset', 'direktt-loyalty-program');
             } else {
-                echo (($change > 0 ? '+' : '') . $change);
+                echo ('<strong>' . ($change > 0 ? '+' : '') . $change . '<strong>');
             }
             echo '</td>';
             echo '<td>' . esc_html($date) . '</td>';
