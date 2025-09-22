@@ -10,40 +10,42 @@
  */
 
 // If this file is called directly, abort.
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
-add_action( 'plugins_loaded', 'direktt_loyalty_program_activation_check', -20 );
+add_action('plugins_loaded', 'direktt_loyalty_program_activation_check', -20);
 
-function direktt_loyalty_program_activation_check() {
-    if ( ! function_exists( 'is_plugin_active' ) ) {
+function direktt_loyalty_program_activation_check()
+{
+    if (! function_exists('is_plugin_active')) {
         require_once ABSPATH . 'wp-admin/includes/plugin.php';
     }
 
     $required_plugin = 'direktt-plugin/direktt.php';
 
-    if ( ! is_plugin_active( $required_plugin ) ) {
-        add_action( 'after_plugin_row_direktt-loyalty-program/direktt-loyalty-program.php', function ( $plugin_file, $plugin_data, $status ) {
+    if (! is_plugin_active($required_plugin)) {
+        add_action('after_plugin_row_direktt-loyalty-program/direktt-loyalty-program.php', function ($plugin_file, $plugin_data, $status) {
             $colspan = 3;
-            ?>
+?>
             <tr class="plugin-update-tr">
-                <td colspan="<?php echo esc_attr( $colspan ); ?>" style="box-shadow: none;">
+                <td colspan="<?php echo esc_attr($colspan); ?>" style="box-shadow: none;">
                     <div style="color: #b32d2e; font-weight: bold;">
-                        <?php echo esc_html__( 'Direktt Loyalty Program requires the Direktt WordPress Plugin to be active. Please activate Direktt WordPress Plugin first.', 'direktt-loyalty-program' ); ?>
+                        <?php echo esc_html__('Direktt Loyalty Program requires the Direktt WordPress Plugin to be active. Please activate Direktt WordPress Plugin first.', 'direktt-loyalty-program'); ?>
                     </div>
                 </td>
             </tr>
-            <?php
+    <?php
         }, 10, 3);
 
-        deactivate_plugins( plugin_basename( __FILE__ ) );
+        deactivate_plugins(plugin_basename(__FILE__));
     }
 }
 
 add_action('direktt_setup_settings_pages', 'setup_loyalty_program_settings_page');
 
-function setup_loyalty_program_settings_page() {
+function setup_loyalty_program_settings_page()
+{
     Direktt::add_settings_page(
         array(
             "id" => "loyalty-program",
@@ -54,11 +56,12 @@ function setup_loyalty_program_settings_page() {
     );
 }
 
-function render_loyalty_program_settings() {
+function render_loyalty_program_settings()
+{
     $success = false;
 
     // Handle form submission
-    if ( $_SERVER['REQUEST_METHOD'] === 'POST' && isset( $_POST['direktt_admin_loyalty_program_nonce'] ) && wp_verify_nonce( $_POST['direktt_admin_loyalty_program_nonce'], 'direktt_admin_loyalty_program_save' ) ) {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['direktt_admin_loyalty_program_nonce']) && wp_verify_nonce($_POST['direktt_admin_loyalty_program_nonce'], 'direktt_admin_loyalty_program_save')) {
         // update options based on form submission
         update_option('direktt_loyalty_program_categories', isset($_POST['direktt_loyalty_program_categories']) ? intval($_POST['direktt_loyalty_program_categories']) : 0);
         update_option('direktt_loyalty_program_tags', isset($_POST['direktt_loyalty_program_tags']) ? intval($_POST['direktt_loyalty_program_tags']) : 0);
@@ -104,13 +107,13 @@ function render_loyalty_program_settings() {
             ]
         ]
     ];
-    $template_posts = get_posts( $template_args );
+    $template_posts = get_posts($template_args);
 
     $all_categories = Direktt_User::get_all_user_categories();
     $all_tags = Direktt_User::get_all_user_tags();
     ?>
     <div class="wrap">
-        <?php if ( $success ) : ?>
+        <?php if ($success) : ?>
             <div class="updated notice is-dismissible">
                 <p>Settings saved successfully.</p>
             </div>
@@ -161,38 +164,40 @@ function render_loyalty_program_settings() {
                         </div>
                         <button type="button" class="button" id="add_points_rule">Add Points Rule</button>
                         <script>
-                        (function($){
-                            var pointsRules = <?php echo json_encode(get_option('direktt_loyalty_points_rules', [])); ?>;
-                            function renderRule(index, value) {
-                                return `
+                            (function($) {
+                                var pointsRules = <?php echo json_encode(get_option('direktt_loyalty_points_rules', [])); ?>;
+
+                                function renderRule(index, value) {
+                                    return `
                                 <div class="direktt-loyalty-program-points-rule" style="margin-bottom:8px;">
                                     <label>
                                         <input type="number" name="direktt_loyalty_points_rules[]" value="${value ? value : 1}" placeholder="Points" min="1" />
                                     </label>
                                     <button type="button" class="button direktt_loyalty_program_remove_points_rule">Remove</button>
                                 </div>`;
-                            }
-                            function refreshRules() {
-                                var html = '';
-                                if(pointsRules.length) {
-                                    for(var i=0; i<pointsRules.length; i++) {
-                                        html += renderRule(i, pointsRules[i]);
-                                    }
                                 }
-                                $('#direktt_points_repeater').html(html);
-                            }
-                            $(document).ready(function(){
-                                refreshRules();
-                                $('#add_points_rule').on('click', function(e){
-                                    e.preventDefault();
-                                    $('#direktt_points_repeater').append(renderRule('', ''));
+
+                                function refreshRules() {
+                                    var html = '';
+                                    if (pointsRules.length) {
+                                        for (var i = 0; i < pointsRules.length; i++) {
+                                            html += renderRule(i, pointsRules[i]);
+                                        }
+                                    }
+                                    $('#direktt_points_repeater').html(html);
+                                }
+                                $(document).ready(function() {
+                                    refreshRules();
+                                    $('#add_points_rule').on('click', function(e) {
+                                        e.preventDefault();
+                                        $('#direktt_points_repeater').append(renderRule('', ''));
+                                    });
+                                    $('#direktt_points_repeater').on('click', '.direktt_loyalty_program_remove_points_rule', function(e) {
+                                        e.preventDefault();
+                                        $(this).closest('.direktt-loyalty-program-points-rule').remove();
+                                    });
                                 });
-                                $('#direktt_points_repeater').on('click', '.direktt_loyalty_program_remove_points_rule', function(e){
-                                    e.preventDefault();
-                                    $(this).closest('.direktt-loyalty-program-points-rule').remove();
-                                });
-                            });
-                        })(jQuery);
+                            })(jQuery);
                         </script>
                         <p class="description">Add rules for awarding points (e.g. 10).</p>
                     </td>
@@ -289,18 +294,19 @@ function render_loyalty_program_settings() {
 
 add_action('direktt_setup_profile_tools', 'setup_loyalty_program_profile_tools');
 
-function setup_loyalty_program_profile_tools() {
-    $selected_category = intval( get_option('direktt_loyalty_program_categories', 0) );
-    $selected_tag = intval( get_option('direktt_loyalty_program_tags', 0) );
+function setup_loyalty_program_profile_tools()
+{
+    $selected_category = intval(get_option('direktt_loyalty_program_categories', 0));
+    $selected_tag = intval(get_option('direktt_loyalty_program_tags', 0));
 
-    if ( $selected_category !== 0 ) {
+    if ($selected_category !== 0) {
         $category = get_term($selected_category, 'direkttusercategories');
         $category_slug = $category ? $category->slug : '';
     } else {
         $category_slug = '';
     }
 
-    if ( $selected_tag !== 0 ) {
+    if ($selected_tag !== 0) {
         $tag = get_term($selected_tag, 'direkttusertags');
         $tag_slug = $tag ? $tag->slug : '';
     } else {
@@ -319,7 +325,8 @@ function setup_loyalty_program_profile_tools() {
     );
 }
 
-function render_loyalty_program_tool() {
+function render_loyalty_program_tool()
+{
     $subscription_id = isset($_GET['subscriptionId']) ? sanitize_text_field(wp_unslash($_GET['subscriptionId'])) : false;
     $profile_user = Direktt_User::get_user_by_subscription_id($subscription_id);
     if (!$profile_user) {
@@ -362,8 +369,8 @@ function render_loyalty_program_tool() {
             }
             $transactions[] = $transaction;
             update_post_meta($user_id, 'direktt_loyalty_transactions', $transactions);
-            
-            if ( $loyalty_user && $loyalty_user_template !== 0 ) {
+
+            if ($loyalty_user && $loyalty_user_template !== 0) {
                 Direktt_Message::send_message_template(
                     [$subscription_id],
                     $loyalty_user_template,
@@ -374,7 +381,7 @@ function render_loyalty_program_tool() {
                 );
             }
 
-            if ( $loyalty_admin && $loyalty_admin_template !== 0 ) {
+            if ($loyalty_admin && $loyalty_admin_template !== 0) {
                 Direktt_Message::send_message_template_to_admin(
                     $loyalty_admin_template,
                     [
@@ -391,7 +398,7 @@ function render_loyalty_program_tool() {
             exit;
         }
 
-        if ( isset($_POST['reset_points']) && $_POST['reset_points'] === '1' ) {
+        if (isset($_POST['reset_points']) && $_POST['reset_points'] === '1') {
             update_post_meta($user_id, 'direktt_loyalty_points', $initial_points);
             global $direktt_user;
             $admin_id = $direktt_user['ID'];
@@ -409,7 +416,7 @@ function render_loyalty_program_tool() {
             $transactions[] = $transaction;
             update_post_meta($user_id, 'direktt_loyalty_transactions', $transactions);
 
-            if ( $loyalty_user_reset && $loyalty_user_template_reset !== 0 ) {
+            if ($loyalty_user_reset && $loyalty_user_template_reset !== 0) {
                 Direktt_Message::send_message_template(
                     [$subscription_id],
                     $loyalty_user_template_reset,
@@ -419,7 +426,7 @@ function render_loyalty_program_tool() {
                 );
             }
 
-            if ( $loyalty_admin_reset && $loyalty_admin_template_reset !== 0 ) {
+            if ($loyalty_admin_reset && $loyalty_admin_template_reset !== 0) {
                 Direktt_Message::send_message_template_to_admin(
                     $loyalty_admin_template_reset,
                     [
@@ -435,40 +442,40 @@ function render_loyalty_program_tool() {
             exit;
         }
     }
-    
+
     // Check if a success message is set and display it
     if ($message = get_transient('direktt_loyalty_success_message')) {
         echo '<div class="updated notice is-dismissible"><p>' . esc_html($message) . '</p></div>';
         delete_transient('direktt_loyalty_success_message'); // Clear the message after it's shown
     }
-    ?>
+?>
     <script>
-        jQuery( document ).ready( function( $ ) {
+        jQuery(document).ready(function($) {
             // Show confirmation popup
-            $( 'button[name="points_change_btn"]' ).on( 'click', function( e ) {
+            $('button[name="points_change_btn"]').on('click', function(e) {
                 e.preventDefault();
-                var changeValue = $( this ).val();
-                $( '#direktt-loyalty-program-confirm' ).addClass( 'direktt-popup-on' );
-                $( '#direktt-loyalty-program-confirm .direktt-popup-yes' ).data( 'change-value', changeValue );
-                if ( changeValue < 0 ) {
-                    $( '#direktt-loyalty-program-confirm .direktt-popup-text' ).text( $( '#direktt-loyalty-program-confirm .direktt-popup-text' ).text().replace( '__POINTS__' , '<?php echo esc_js( __( 'remove', 'direktt-loyalty-program' ) ); ?> ' + Math.abs(changeValue) ) );
+                var changeValue = $(this).val();
+                $('#direktt-loyalty-program-confirm').addClass('direktt-popup-on');
+                $('#direktt-loyalty-program-confirm .direktt-popup-yes').data('change-value', changeValue);
+                if (changeValue < 0) {
+                    $('#direktt-loyalty-program-confirm .direktt-popup-text').text($('#direktt-loyalty-program-confirm .direktt-popup-text').text().replace('__POINTS__', '<?php echo esc_js(__('remove', 'direktt-loyalty-program')); ?> ' + Math.abs(changeValue)));
                 } else {
-                    $( '#direktt-loyalty-program-confirm .direktt-popup-text' ).text( $( '#direktt-loyalty-program-confirm .direktt-popup-text' ).text().replace( '__POINTS__' , '<?php echo esc_js( __( 'add', 'direktt-loyalty-program' ) ); ?> ' + changeValue ) );
+                    $('#direktt-loyalty-program-confirm .direktt-popup-text').text($('#direktt-loyalty-program-confirm .direktt-popup-text').text().replace('__POINTS__', '<?php echo esc_js(__('add', 'direktt-loyalty-program')); ?> ' + changeValue));
                 }
             });
 
-            $(  '#direktt-loyalty-program-confirm .direktt-popup-no' ).on( 'click', function() {
-                $( '#direktt-loyalty-program-confirm' ).removeClass( 'direktt-popup-on' );
+            $('#direktt-loyalty-program-confirm .direktt-popup-no').on('click', function() {
+                $('#direktt-loyalty-program-confirm').removeClass('direktt-popup-on');
                 setTimeout(function() {
                     // Reset the confirmation text
-                    $( '#direktt-loyalty-program-confirm .direktt-popup-text' ).text( '<?php echo esc_js( __( 'Are you sure that you want to __POINTS__ points.', 'direktt-loyalty-program' ) ); ?>' );
+                    $('#direktt-loyalty-program-confirm .direktt-popup-text').text('<?php echo esc_js(__('Are you sure that you want to __POINTS__ points.', 'direktt-loyalty-program')); ?>');
                 }, 300);
             });
 
-            $( '#direktt-loyalty-program-confirm .direktt-popup-yes' ).on( 'click', function() {
-                var changeValue = $( this ).data( 'change-value' );
-                $( '#direktt-loyalty-program-confirm' ).removeClass( 'direktt-popup-on' );
-                $( '.direktt-loader-overlay' ).fadeIn();
+            $('#direktt-loyalty-program-confirm .direktt-popup-yes').on('click', function() {
+                var changeValue = $(this).data('change-value');
+                $('#direktt-loyalty-program-confirm').removeClass('direktt-popup-on');
+                $('.direktt-loader-overlay').fadeIn();
                 // Submit the form with the change value
                 $('<input>').attr({
                     type: 'hidden',
@@ -481,18 +488,18 @@ function render_loyalty_program_tool() {
                 }, 500);
             });
 
-            $( '#reset_points_btn' ).on( 'click', function( e ) {
+            $('#reset_points_btn').on('click', function(e) {
                 e.preventDefault();
-                $( '#direktt-loyalty-program-reset' ).fadeIn();
+                $('#direktt-loyalty-program-reset').fadeIn();
             });
 
-            $( '#direktt-loyalty-program-reset .direktt-popup-no' ).on( 'click', function() {
-                $( '#direktt-loyalty-program-reset' ).fadeOut();
+            $('#direktt-loyalty-program-reset .direktt-popup-no').on('click', function() {
+                $('#direktt-loyalty-program-reset').fadeOut();
             });
 
-            $( '#direktt-loyalty-program-reset .direktt-popup-yes' ).on( 'click', function() {
-                $( '#direktt-loyalty-program-reset' ).fadeOut();
-                $( '.direktt-loader-overlay' ).fadeIn();
+            $('#direktt-loyalty-program-reset .direktt-popup-yes').on('click', function() {
+                $('#direktt-loyalty-program-reset').fadeOut();
+                $('.direktt-loader-overlay').fadeIn();
                 // Submit the form to reset points
                 $('<input>').attr({
                     type: 'hidden',
@@ -553,14 +560,16 @@ function render_loyalty_program_tool() {
             <?php
             wp_nonce_field('direktt_loyalty_points_action', 'direktt_loyalty_points_nonce');
             // Filter and sort rules descending for minus buttons
-            $rules = array_filter(array_map('intval', $points_rules), function($v){ return $v > 0; });
-            if ( ! empty($rules) ) {
-                ?>
+            $rules = array_filter(array_map('intval', $points_rules), function ($v) {
+                return $v > 0;
+            });
+            if (! empty($rules)) {
+            ?>
                 <div class="direktt-loyalty-program-rules">
                     <?php
                     rsort($rules, SORT_NUMERIC);
                     foreach ($rules as $rule): ?>
-                        <button name="points_change_btn" value="-<?php echo esc_attr( $rule ); ?>" class="button-red">-<?php echo esc_html( $rule ); ?></button>
+                        <button name="points_change_btn" value="-<?php echo esc_attr($rule); ?>" class="button-red">-<?php echo esc_html($rule); ?></button>
                     <?php endforeach; ?>
 
                     <?php
@@ -568,19 +577,19 @@ function render_loyalty_program_tool() {
                     $rules_asc = $rules;
                     sort($rules_asc, SORT_NUMERIC);
                     foreach ($rules_asc as $rule): ?>
-                        <button name="points_change_btn" value="<?php echo esc_attr( $rule ); ?>" class="button-green">+<?php echo esc_html( $rule ); ?></button>
-                        <?php endforeach; ?>
+                        <button name="points_change_btn" value="<?php echo esc_attr($rule); ?>" class="button-green">+<?php echo esc_html($rule); ?></button>
+                    <?php endforeach; ?>
                 </div>
             <?php } ?>
-            <button name="reset_points_btn" id="reset_points_btn" class="button-green"><?php echo esc_html__( 'Reset points', 'direktt-loyalty-program' ); ?></button>
+            <button name="reset_points_btn" id="reset_points_btn" class="button-green"><?php echo esc_html__('Reset points', 'direktt-loyalty-program'); ?></button>
         </form>
         <?php
         $transactions = get_post_meta($user_id, 'direktt_loyalty_transactions', true);
         if (!is_array($transactions)) {
             $transactions = [];
         }
-        
-        if ( empty( $transactions ) ) {
+
+        if (empty($transactions)) {
             echo '<div class="direktt-loyalty-program-transactions">';
             echo '<h4>' . esc_html__('Recent Transactions', 'direktt-loyalty-program') . '</h4>';
             echo '<p>' . esc_html__('No transactions found.', 'direktt-loyalty-program') . '</p>';
@@ -590,62 +599,76 @@ function render_loyalty_program_tool() {
             $transactions = array_slice($transactions, 0, 20);
             echo '<div class="direktt-loyalty-program-transactions">';
             echo '<h4>' . esc_html__('Recent Transactions', 'direktt-loyalty-program') . '</h4>';
-            echo '<ul>';
+            echo '<table>';
+            echo '<tr>';
+            echo '<th>' . esc_html__('Number of points', 'direktt-loyalty-program') . '</th>';
+            echo '<th>' . esc_html__('Time of transaction', 'direktt-loyalty-program') . '</th>';
+            if (Direktt_User::is_direktt_admin()) {
+                echo '<th>' . esc_html__('Direktt User', 'direktt-loyalty-program') . '</th>';
+            }
+            echo '<th>' . esc_html__('End balance', 'direktt-loyalty-program') . '</th>';
+            echo '</tr>';
+
             foreach ($transactions as $transaction) {
-                $admin_id = $transaction['admin_id'];
-                $direktt_user = Direktt_User::get_user_by_post_id($admin_id);
-                $display_name = get_the_title($direktt_user['ID']);
-                $subscription_id = $direktt_user['direktt_user_id'];
                 $date = wp_date('Y-m-d H:i:s', $transaction['timestamp']);
                 $change = $transaction['change'];
                 $new_balance = $transaction['new_balance'];
-                $admin_name = $display_name ? ( $display_name . ' (' . $subscription_id . ')' ) : $subscription_id;
-                if ( Direktt_User::is_direktt_admin() ) {
-                    if ( $change === 'reset' ) {
-                        echo '<li>' . esc_html($admin_name) . ' - points reset on ' . esc_html($date) . ', new balance: ' . esc_html($new_balance) . '.</li>';
-                    } else {
-                        echo '<li>' . esc_html($admin_name) . ' - ' . ( $change > 0 ? esc_html('+') : '' ) . esc_html($change) . ' points on ' . esc_html($date) . ', new balance: ' . esc_html($new_balance) . '.</li>';
-                    }
+                $admin_id = $transaction['admin_id'];
+                $direktt_user = Direktt_User::get_user_by_post_id($admin_id);
+                if ($direktt_user) {
+                    $display_name = get_the_title($direktt_user['ID']);
                 } else {
-                    if ( $change === 'reset' ) {
-                        echo '<li>Points reset on ' . esc_html($date) . ', new balance: ' . esc_html($new_balance) . '.</li>';
-                    } else {
-                        echo '<li>' . ( $change > 0 ? esc_html('+') : '' ) . esc_html($change) . ' points on ' . esc_html($date) . ', new balance: ' . esc_html($new_balance) . '.</li>';
-                    }
+                    $display_name = esc_html__('Unknown', 'direktt-loyalty-program');
                 }
+                echo '<tr>';
+                echo '<td>';
+                if ($change === 'reset') {
+                    esc_html_e('Reset', 'direktt-loyalty-program');
+                } else {
+                    echo (($change > 0 ? '+' : '') . $change);
+                }
+                echo '</td>';
+                echo '<td>' . esc_html($date) . '</td>';
+                if (Direktt_User::is_direktt_admin()) {
+                    echo '<td>' . esc_html($display_name) . '</td>';
+                }
+                echo '<td>' . esc_html(esc_html($new_balance)) . '</td>';
+                echo '</tr>';
             }
-            echo '</ul>';
+            echo '</table>';
             echo '</div>';
         }
         ?>
     </div>
-    <?php
+<?php
 }
 
-function direktt_loyalty_add_meta_box() {
+function direktt_loyalty_add_meta_box()
+{
     add_meta_box(
         'direktt_loyalty_program_meta_box',
         esc_html__('Loyalty Program', 'direktt-loyalty-program'),
         'render_loyalty_program_meta_box',
         'direkttusers',
-        'side',
+        'advanced',
         'default'
     );
 }
 
 add_action('add_meta_boxes', 'direktt_loyalty_add_meta_box');
 
-function render_loyalty_program_meta_box($post) {
+function render_loyalty_program_meta_box($post)
+{
     $user_id = $post->ID;
     $user_points = intval(get_post_meta($user_id, 'direktt_loyalty_points', true));
     $initial_points = intval(get_option('direktt_loyalty_program_initial_points', 0));
-    
+
     if ($initial_points > 0 && !$user_points) {
         update_post_meta($user_id, 'direktt_loyalty_points', $initial_points);
         $user_points = $initial_points;
     }
-    
-    ?>
+
+?>
     <div class="direktt-loyalty-program-meta-box">
         <div class="direktt-loyalty-program-points">
             <p><?php echo esc_html__('Current Points: ', 'direktt-loyalty-program') . '<strong>' . esc_html($user_points) . '</strong>'; ?></p>
@@ -657,33 +680,51 @@ function render_loyalty_program_meta_box($post) {
             if (is_array($transactions) && !empty($transactions)) {
                 $transactions = array_reverse($transactions);
                 $transactions = array_slice($transactions, 0, 20);
-                echo '<ul>';
+                echo '<table>';
+                echo '<tr>';
+                echo '<th>' . esc_html__('Number of points', 'direktt-loyalty-program') . '</th>';
+                echo '<th>' . esc_html__('Time of transaction', 'direktt-loyalty-program') . '</th>';
+                echo '<th>' . esc_html__('Direktt User', 'direktt-loyalty-program') . '</th>';
+                echo '<th>' . esc_html__('End balance', 'direktt-loyalty-program') . '</th>';
+                echo '</tr>';
                 foreach ($transactions as $transaction) {
                     $admin_id = $transaction['admin_id'];
                     $direktt_user = Direktt_User::get_user_by_post_id($admin_id);
-                    $display_name = get_the_title($direktt_user['ID']);
-                    $subscription_id = $direktt_user['direktt_user_id'];
+                    if ($direktt_user) {
+                        $display_name = get_the_title($direktt_user['ID']);
+                    } else {
+                        $display_name = esc_html__('Unknown', 'direktt-loyalty-program');
+                    }
                     $date = wp_date('Y-m-d H:i:s', $transaction['timestamp']);
                     $change = $transaction['change'];
                     $new_balance = $transaction['new_balance'];
-                    $admin_name = $display_name ? ( $display_name . ' (' . $subscription_id . ')' ) : $subscription_id;
-                    if ( $change === 'reset' ) {
-                        echo '<li>' . esc_html($admin_name) . ' - points reset on ' . esc_html($date) . ', new balance: ' . esc_html($new_balance) . '.</li>';
+
+                    echo '<tr>';
+                    echo '<td>';
+                    if ($change === 'reset') {
+                        esc_html_e('Reset', 'direktt-loyalty-program');
                     } else {
-                        echo '<li>' . esc_html($admin_name) . ' - ' . ( $change > 0 ? esc_html('+') : '' ) . esc_html($change) . ' points on ' . esc_html($date) . ', new balance: ' . esc_html($new_balance) . '.</li>';
+                        echo (($change > 0 ? '+' : '') . $change);
                     }
+                    echo '</td>';
+                    echo '<td>' . esc_html($date) . '</td>';
+                    echo '<td>' . esc_html($display_name) . '</td>';
+                    echo '<td>' . esc_html(esc_html($new_balance)) . '</td>';
+                    echo '</tr>';
                 }
-                echo '</ul>';
+
+                echo '</table>';
             } else {
                 echo '<p>' . esc_html__('No transactions found.', 'direktt-loyalty-program') . '</p>';
             }
             ?>
         </div>
     </div>
-    <?php
+<?php
 }
 
-function loyalty_program_service_shortcode() {
+function loyalty_program_service_shortcode()
+{
     ob_start();
 
     $user = wp_get_current_user();
@@ -717,17 +758,30 @@ function loyalty_program_service_shortcode() {
         echo '<div class="direktt-loyalty-program-transactions">';
         echo '<h4>' . esc_html__('Recent Transactions', 'direktt-loyalty-program') . '</h4>';
         echo '<ul>';
+
+        echo '<table>';
+        echo '<tr>';
+        echo '<th>' . esc_html__('Number of points', 'direktt-loyalty-program') . '</th>';
+        echo '<th>' . esc_html__('Time of transaction', 'direktt-loyalty-program') . '</th>';
+        echo '<th>' . esc_html__('End balance', 'direktt-loyalty-program') . '</th>';
+        echo '</tr>';
         foreach ($transactions as $transaction) {
             $date = wp_date('Y-m-d H:i:s', $transaction['timestamp']);
             $change = $transaction['change'];
             $new_balance = $transaction['new_balance'];
-            if ( $change === 'reset' ) {
-                echo '<li>Points reset on ' . esc_html($date) . ', new balance: ' . esc_html($new_balance) . '.</li>';
+            echo '<tr>';
+            echo '<td>';
+            if ($change === 'reset') {
+                esc_html_e('Reset', 'direktt-loyalty-program');
             } else {
-                echo '<li>' . ( $change > 0 ? esc_html('+') : '' ) . esc_html($change) . ' points on ' . esc_html($date) . ', new balance: ' . esc_html($new_balance) . '.</li>';
+                echo (($change > 0 ? '+' : '') . $change);
             }
+            echo '</td>';
+            echo '<td>' . esc_html($date) . '</td>';
+            echo '<td>' . esc_html(esc_html($new_balance)) . '</td>';
+            echo '</tr>';
         }
-        echo '</ul>';
+        echo '</table>';
         echo '</div>';
         echo '</div>';
     }
