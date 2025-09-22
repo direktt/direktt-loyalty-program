@@ -58,6 +58,10 @@ function setup_loyalty_program_settings_page()
 
 function render_loyalty_program_settings()
 {
+    if (! current_user_can('manage_options')) {
+        wp_die(esc_html__('You do not have sufficient permissions to access this page.', 'direktt-loyalty-program'));
+    }
+
     $success = false;
 
     // Handle form submission
@@ -165,7 +169,8 @@ function render_loyalty_program_settings()
                         <button type="button" class="button" id="add_points_rule">Add Points Rule</button>
                         <script>
                             (function($) {
-                                var pointsRules = <?php echo json_encode(get_option('direktt_loyalty_points_rules', [])); ?>;
+                        
+                                var pointsRules = <?php echo wp_json_encode(get_option('direktt_loyalty_points_rules', [])); ?>;
 
                                 function renderRule(index, value) {
                                     return `
