@@ -596,14 +596,14 @@ function render_loyalty_program_tool()
 
         if (empty($transactions)) {
             echo '<div class="direktt-loyalty-program-transactions">';
-            echo '<h4>' . esc_html__('Recent Transactions', 'direktt-loyalty-program') . '</h4>';
+            echo '<h3>' . esc_html__('Recent Transactions', 'direktt-loyalty-program') . '</h3>';
             echo '<p>' . esc_html__('No transactions found.', 'direktt-loyalty-program') . '</p>';
             echo '</div>';
         } else {
             $transactions = array_reverse($transactions);
             $transactions = array_slice($transactions, 0, 20);
             echo '<div class="direktt-loyalty-program-transactions">';
-            echo '<h4>' . esc_html__('Recent Transactions', 'direktt-loyalty-program') . '</h4>';
+            echo '<h3>' . esc_html__('Recent Transactions', 'direktt-loyalty-program') . '</h3>';
             echo '<table>';
             echo '<thead>';
 				echo '<tr>';
@@ -684,7 +684,7 @@ function render_loyalty_program_meta_box($post)
             <p><?php echo esc_html__('Current Points: ', 'direktt-loyalty-program') . '<strong>' . esc_html($user_points) . '</strong>'; ?></p>
         </div>
         <div class="direktt-loyalty-program-transactions">
-            <h4><?php echo esc_html__('Recent Transactions', 'direktt-loyalty-program'); ?></h4>
+            <h3><?php echo esc_html__('Recent Transactions', 'direktt-loyalty-program'); ?></h3>
             <?php
             $transactions = get_post_meta($user_id, 'direktt_loyalty_transactions', true);
             if (is_array($transactions) && !empty($transactions)) {
@@ -756,7 +756,7 @@ function loyalty_program_service_shortcode()
         echo '<p>' . esc_html__('Current Points: ', 'direktt-loyalty-program') . '<strong>' . esc_html($points) . '</strong></p>';
         echo '</div>';
         echo '<div class="direktt-loyalty-program-transactions">';
-        echo '<h4>' . esc_html__('Recent Transactions', 'direktt-loyalty-program') . '</h4>';
+        echo '<h3>' . esc_html__('Recent Transactions', 'direktt-loyalty-program') . '</h3>';
         echo '<p>' . esc_html__('No transactions found.', 'direktt-loyalty-program') . '</p>';
         echo '</div>';
         echo '</div>';
@@ -769,7 +769,7 @@ function loyalty_program_service_shortcode()
         echo '<p>' . esc_html__('Current Points: ', 'direktt-loyalty-program') . '<strong>' . esc_html($points) . '</strong></p>';
         echo '</div>';
         echo '<div class="direktt-loyalty-program-transactions">';
-        echo '<h4>' . esc_html__('Recent Transactions', 'direktt-loyalty-program') . '</h4>';
+        echo '<h3>' . esc_html__('Recent Transactions', 'direktt-loyalty-program') . '</h3>';
         echo '<ul>';
 
         echo '<table>';
