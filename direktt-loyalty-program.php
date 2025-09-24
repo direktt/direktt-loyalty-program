@@ -690,7 +690,7 @@ function render_loyalty_program_meta_box($post)
             if (is_array($transactions) && !empty($transactions)) {
                 $transactions = array_reverse($transactions);
                 $transactions = array_slice($transactions, 0, 20);
-                echo '<table class="widefat">';
+                echo '<table class="widefat striped">';
 					echo '<thead>';
 							echo '<tr>';
 							echo '<th>' . esc_html__('Points', 'direktt-loyalty-program') . '</th>';
