@@ -195,11 +195,11 @@ function render_loyalty_program_settings() {
                                 }
                                 $(document).ready(function() {
                                     refreshRules();
-                                    $('#add_points_rule').on('click', function(e) {
+                                    $('#add_points_rule').off('click').on('click', function(e) {
                                         e.preventDefault();
                                         $('#direktt_points_repeater').append(renderRule('', ''));
                                     });
-                                    $('#direktt_points_repeater').on('click', '.direktt_loyalty_program_remove_points_rule', function(e) {
+                                    $('#direktt_points_repeater').off('click').on('click', '.direktt_loyalty_program_remove_points_rule', function(e) {
                                         e.preventDefault();
                                         $(this).closest('.direktt-loyalty-program-points-rule').remove();
                                     });
@@ -457,7 +457,7 @@ function render_loyalty_program_tool() {
     <script>
         jQuery(document).ready(function($) {
             // Show confirmation popup
-            $('button[name="points_change_btn"]').on('click', function(e) {
+            $('button[name="points_change_btn"]').off('click').on('click', function(e) {
                 e.preventDefault();
                 var changeValue = $(this).val();
                 $('#direktt-loyalty-program-confirm').addClass('direktt-popup-on');
@@ -469,7 +469,7 @@ function render_loyalty_program_tool() {
                 }
             });
 
-            $('#direktt-loyalty-program-confirm .direktt-popup-no').on('click', function() {
+            $('#direktt-loyalty-program-confirm .direktt-popup-no').off('click').on('click', function() {
                 $('#direktt-loyalty-program-confirm').removeClass('direktt-popup-on');
                 setTimeout(function() {
                     // Reset the confirmation text
@@ -477,7 +477,7 @@ function render_loyalty_program_tool() {
                 }, 300);
             });
 
-            $('#direktt-loyalty-program-confirm .direktt-popup-yes').on('click', function() {
+            $('#direktt-loyalty-program-confirm .direktt-popup-yes').off('click').on('click', function() {
                 var changeValue = $(this).data('change-value');
                 $('#direktt-loyalty-program-confirm').removeClass('direktt-popup-on');
                 $('.direktt-loader-overlay').fadeIn();
@@ -493,16 +493,16 @@ function render_loyalty_program_tool() {
                 }, 500);
             });
 
-            $('#reset_points_btn').on('click', function(e) {
+            $('#reset_points_btn').off('click').on('click', function(e) {
                 e.preventDefault();
                 $('#direktt-loyalty-program-reset').addClass( 'direktt-popup-on' );
             });
 
-            $('#direktt-loyalty-program-reset .direktt-popup-no').on('click', function() {
+            $('#direktt-loyalty-program-reset .direktt-popup-no').off('click').on('click', function() {
                 $('#direktt-loyalty-program-reset').removeClass('direktt-popup-on');
             });
 
-            $('#direktt-loyalty-program-reset .direktt-popup-yes').on('click', function() {
+            $('#direktt-loyalty-program-reset .direktt-popup-yes').off('click').on('click', function() {
                 $('#direktt-loyalty-program-reset').removeClass('direktt-popup-on');
                 $('.direktt-loader-overlay').fadeIn();
                 // Submit the form to reset points
