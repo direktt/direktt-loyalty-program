@@ -706,11 +706,12 @@ function render_loyalty_program_meta_box( $post ) {
 
 function loyalty_program_service_shortcode() {
     ob_start();
-
+    echo '<div id="direktt-profile-wrap">';
     $user         = wp_get_current_user();
     $direktt_user = Direktt_User::get_direktt_user_by_wp_user( $user );
     if ( ! $direktt_user ) {
         echo '<div class="notice notice-error"><p>' . esc_html__( 'You must be logged in to view the loyalty program.', 'direktt-loyalty-program' ) . '</p></div>';
+        echo '</div>';
         return ob_get_clean();
     }
 
@@ -766,6 +767,7 @@ function loyalty_program_service_shortcode() {
         echo '</div>';
     }
 
+    echo '</div>';
     return ob_get_clean();
 }
 
