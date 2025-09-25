@@ -706,7 +706,7 @@ function render_loyalty_program_meta_box( $post ) {
 
 function loyalty_program_service_shortcode() {
     ob_start();
-    echo '<div id="direktt-profile-wrap">';
+    echo '<div id="direktt-profile-wrapper">';
     $user         = wp_get_current_user();
     $direktt_user = Direktt_User::get_direktt_user_by_wp_user( $user );
     if ( ! $direktt_user ) {
