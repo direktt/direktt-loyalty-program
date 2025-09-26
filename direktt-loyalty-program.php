@@ -741,8 +741,6 @@ function loyalty_program_service_shortcode() {
 				echo '</div>';
 				echo '<div class="direktt-loyalty-program-transactions">';
 					echo '<h3>' . esc_html__( 'Recent Transactions', 'direktt-loyalty-program' ) . '</h3>';
-					echo '<ul>';
-
 					echo '<table>';
 						echo '<thead>';
 							echo '<tr>';
