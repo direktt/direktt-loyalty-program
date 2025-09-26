@@ -648,11 +648,12 @@ function render_loyalty_program_meta_box( $post ) {
 
 	?>
     <div class="direktt-loyalty-program-meta-box">
-        <div class="direktt-loyalty-program-points">
+        <div class="direktt-loyalty-program-wrap">
+			<h2><?php echo esc_html__( 'Recent Transactions', 'direktt-loyalty-program' ); ?></h2>
             <p><?php echo esc_html__( 'Current Points: ', 'direktt-loyalty-program' ) . '<strong>' . esc_html( $user_points ) . '</strong>'; ?></p>
         </div>
         <div class="direktt-loyalty-program-transactions">
-            <h3><?php echo esc_html__( 'Recent Transactions', 'direktt-loyalty-program' ); ?></h3>
+            
             <?php
             $transactions = get_post_meta( $user_id, 'direktt_loyalty_transactions', true );
             if ( is_array( $transactions ) && ! empty( $transactions ) ) {
@@ -705,12 +706,17 @@ function render_loyalty_program_meta_box( $post ) {
 }
 
 function loyalty_program_service_shortcode() {
-    ob_start();
-    echo '<div id="direktt-profile-wrapper">';
-    $user         = wp_get_current_user();
-    $direktt_user = Direktt_User::get_direktt_user_by_wp_user( $user );
-    if ( ! $direktt_user ) {
-        echo '<div class="notice notice-error"><p>' . esc_html__( 'You must be logged in to view the loyalty program.', 'direktt-loyalty-program' ) . '</p></div>';
+	$user         = wp_get_current_user();
+	$direktt_user = Direktt_User::get_direktt_user_by_wp_user( $user );
+	if ( ! $direktt_user ) {    
+		ob_start();
+        echo '<div id="direktt-profile-wrapper">';
+			echo '<div class="" id="direktt-profile">';
+				echo '<div class="direktt-profile-data-loyalty-program-tool direktt-service" id="direktt-profile-data">';
+
+					echo '<div class="notice notice-error"><p>' . esc_html__( 'You must be logged in to view the loyalty program.', 'direktt-loyalty-program' ) . '</p></div>';
+				echo '</div>';
+			echo '</div>';
         echo '</div>';
         return ob_get_clean();
     }
@@ -720,13 +726,15 @@ function loyalty_program_service_shortcode() {
     if ( ! is_array( $transactions ) ) {
         $transactions = array();
         echo '<div id="direktt-profile-wrapper">';
-			echo '<div class="direktt-loyalty-program-service" id="direktt-profile">';
-				echo '<div class="direktt-loyalty-program-points">';
-					echo '<p>' . esc_html__( 'Current Points: ', 'direktt-loyalty-program' ) . '<strong>' . esc_html( $points ) . '</strong></p>';
-				echo '</div>';
-				echo '<div class="direktt-loyalty-program-transactions">';
-					echo '<h3>' . esc_html__( 'Recent Transactions', 'direktt-loyalty-program' ) . '</h3>';
-					echo '<p>' . esc_html__( 'No transactions found.', 'direktt-loyalty-program' ) . '</p>';
+			echo '<div class="" id="direktt-profile">';
+				echo '<div class="direktt-profile-data-loyalty-program-tool direktt-service" id="direktt-profile-data">';
+					echo '<div class="direktt-loyalty-program-wrap">';
+						echo '<h2>' . esc_html__( 'Recent Transactions', 'direktt-loyalty-program' ) . '</h2>';
+						echo '<p>' . esc_html__( 'Points: ', 'direktt-loyalty-program' ) . '<strong>' . esc_html( $points ) . '</strong></p>';
+					echo '</div>';
+					echo '<div class="direktt-loyalty-program-transactions">';
+						echo '<p>' . esc_html__( 'No transactions found.', 'direktt-loyalty-program' ) . '</p>';
+					echo '</div>';
 				echo '</div>';
 			echo '</div>';
         echo '</div>';
@@ -735,39 +743,41 @@ function loyalty_program_service_shortcode() {
         $transactions = array_slice( $transactions, 0, 20 );
 
         echo '<div id="direktt-profile-wrapper">';
-			echo '<div class="direktt-loyalty-program-service" id="direktt-profile">';
-				echo '<div class="direktt-loyalty-program-points">';
-					echo '<p>' . esc_html__( 'Current Points: ', 'direktt-loyalty-program' ) . '<strong>' . esc_html( $points ) . '</strong></p>';
-				echo '</div>';
-				echo '<div class="direktt-loyalty-program-transactions">';
-					echo '<h3>' . esc_html__( 'Recent Transactions', 'direktt-loyalty-program' ) . '</h3>';
-					echo '<table>';
-						echo '<thead>';
-							echo '<tr>';
-								echo '<th>' . esc_html__( 'Points', 'direktt-loyalty-program' ) . '</th>';
-								echo '<th>' . esc_html__( 'Time', 'direktt-loyalty-program' ) . '</th>';
-								echo '<th>' . esc_html__( 'Balance', 'direktt-loyalty-program' ) . '</th>';
-							echo '</tr>';
-						echo '</thead>';
-						echo '<tbody>';
-						foreach ( $transactions as $transaction ) {
-							$date        = wp_date( 'Y-m-d H:i:s', $transaction['timestamp'] );
-							$change      = $transaction['change'];
-							$new_balance = $transaction['new_balance'];
-							echo '<tr>';
-							echo '<td>';
-							if ( $change === 'reset' ) {
-								esc_html_e( 'Reset', 'direktt-loyalty-program' );
-							} else {
-								echo ( '<strong>' . ( $change > 0 ? esc_html( '+' ) : '' ) . esc_html( $change ) . '</strong>' );
+			echo '<div class="" id="direktt-profile">';
+				echo '<div class="direktt-profile-data-loyalty-program-tool direktt-service" id="direktt-profile-data">';
+					echo '<div class="direktt-loyalty-program-wrap">';
+						echo '<h2>' . esc_html__( 'Recent Transactions', 'direktt-loyalty-program' ) . '</h2>';
+						echo '<p>' . esc_html__( 'Points: ', 'direktt-loyalty-program' ) . '<strong>' . esc_html( $points ) . '</strong></p>';
+					echo '</div>';
+					echo '<div class="direktt-loyalty-program-transactions">';
+						echo '<table>';
+							echo '<thead>';
+								echo '<tr>';
+									echo '<th>' . esc_html__( 'Points', 'direktt-loyalty-program' ) . '</th>';
+									echo '<th>' . esc_html__( 'Time', 'direktt-loyalty-program' ) . '</th>';
+									echo '<th>' . esc_html__( 'Balance', 'direktt-loyalty-program' ) . '</th>';
+								echo '</tr>';
+							echo '</thead>';
+							echo '<tbody>';
+							foreach ( $transactions as $transaction ) {
+								$date        = wp_date( 'Y-m-d H:i:s', $transaction['timestamp'] );
+								$change      = $transaction['change'];
+								$new_balance = $transaction['new_balance'];
+								echo '<tr>';
+								echo '<td>';
+								if ( $change === 'reset' ) {
+									esc_html_e( 'Reset', 'direktt-loyalty-program' );
+								} else {
+									echo ( '<strong>' . ( $change > 0 ? esc_html( '+' ) : '' ) . esc_html( $change ) . '</strong>' );
+								}
+								echo '</td>';
+								echo '<td>' . esc_html( $date ) . '</td>';
+								echo '<td>' . esc_html( $new_balance ) . '</td>';
+								echo '</tr>';
 							}
-							echo '</td>';
-							echo '<td>' . esc_html( $date ) . '</td>';
-							echo '<td>' . esc_html( $new_balance ) . '</td>';
-							echo '</tr>';
-						}
-						echo '</tbody>';
-					echo '</table>';
+							echo '</tbody>';
+						echo '</table>';
+					echo '</div>';
 				echo '</div>';
 			echo '</div>';
         echo '</div>';
