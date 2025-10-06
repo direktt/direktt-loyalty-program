@@ -335,7 +335,13 @@ function render_loyalty_program_tool() {
     $subscription_id = isset( $_GET['subscriptionId'] ) ? sanitize_text_field( wp_unslash( $_GET['subscriptionId'] ) ) : false;
     $profile_user    = Direktt_User::get_user_by_subscription_id( $subscription_id );
     if ( ! $profile_user ) {
-        echo '<div class="notice notice-error"><p>' . esc_html__( 'User not found.', 'direktt-loyalty-program' ) . '</p></div>';
+        echo '<div id="direktt-profile-wrapper">';
+			echo '<div class="" id="direktt-profile">';
+				echo '<div class="direktt-profile-data-loyalty-program-tool direktt-service" id="direktt-profile-data">';
+                    echo '<div class="notice notice-error"><p>' . esc_html__( 'User not found.', 'direktt-loyalty-program' ) . '</p></div>';
+                echo '</div>';
+            echo '</div>';
+        echo '</div>';
         return;
     }
     $user_id        = $profile_user['ID'];
