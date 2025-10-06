@@ -398,8 +398,8 @@ function render_loyalty_program_tool() {
                 );
             }
 
-            set_transient( 'direktt_loyalty_success_message', __( 'Points updated successfully. New balance: ', 'direktt-loyalty-program' ) . $user_points, 30 ); // Message lasts for 30 seconds
-            wp_safe_redirect( $_SERVER['REQUEST_URI'] );
+            $redirect_url = add_query_arg( 'success_flag', '1', $_SERVER['REQUEST_URI'] );
+            wp_safe_redirect( $redirect_url );
             exit;
         }
 
@@ -442,16 +442,21 @@ function render_loyalty_program_tool() {
                 );
             }
 
-            set_transient( 'direktt_loyalty_success_message', __( 'Points reset successfully. New balance: ', 'direktt-loyalty-program' ) . $initial_points, 30 ); // Message lasts for 30 seconds
-            wp_safe_redirect( $_SERVER['REQUEST_URI'] );
+            $redirect_url = add_query_arg( 'success_flag', '2', $_SERVER['REQUEST_URI'] );
+            wp_safe_redirect( $redirect_url );
             exit;
         }
     }
 
     // Check if a success message is set and display it
-    if ( $message = get_transient( 'direktt_loyalty_success_message' ) ) {
-        echo '<div class="updated notice is-dismissible"><p>' . esc_html( $message ) . '</p></div>';
-        delete_transient( 'direktt_loyalty_success_message' ); // Clear the message after it's shown
+    if ( isset( $_GET['success_flag'] ) ) {
+        $success_flag = sanitize_text_field( $_GET['success_flag'] );
+        if ( $success_flag === '1' ) {
+            $message = __( 'Points updated successfully. New balance: ', 'direktt-loyalty-program' ) . $user_points;
+        } else {
+            $message = __( 'Points reset successfully. New balance: ', 'direktt-loyalty-program' ) . $initial_points;
+        }
+        echo '<div class="notice"><p>' . esc_html( $message ) . '</p></div>';
     }
 	?>
     <script>
