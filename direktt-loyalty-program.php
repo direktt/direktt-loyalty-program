@@ -521,7 +521,6 @@ function render_loyalty_program_tool() {
     <?php
     echo Direktt_Public::direktt_render_confirm_popup( 'direktt-loyalty-program-confirm', __( 'Are you sure that you want to', 'direktt-loyalty-program' ) . ' __POINTS__ ' . __( 'points.', 'direktt-loyalty-program' ) );
     echo Direktt_Public::direktt_render_confirm_popup( 'direktt-loyalty-program-reset', __( 'Are you sure that you want to reset the points.', 'direktt-loyalty-program' ) );
-    echo Direktt_Public::direktt_render_alert_popup( '', __( 'Placeholder text, Lorem Ipsum', 'direktt-loyalty-program' ) );
     echo Direktt_Public::direktt_render_loader( __( 'Don\'t refresh the page', 'direktt-loyalty-program' ) );
     ?>
     <div class="direktt-loyalty-program-wrap">
@@ -713,7 +712,6 @@ function loyalty_program_service_shortcode() {
         echo '<div id="direktt-profile-wrapper">';
 			echo '<div class="" id="direktt-profile">';
 				echo '<div class="direktt-profile-data-loyalty-program-tool direktt-service" id="direktt-profile-data">';
-
 					echo '<div class="notice notice-error"><p>' . esc_html__( 'You must be logged in to view the loyalty program.', 'direktt-loyalty-program' ) . '</p></div>';
 				echo '</div>';
 			echo '</div>';
