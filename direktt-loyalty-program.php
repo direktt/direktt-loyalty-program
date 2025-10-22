@@ -3,7 +3,7 @@
 /**
  * Plugin Name: Direktt Loyalty Program
  * Description: Direktt Loyalty Program Direktt Plugin
- * Version: 1.0.1
+ * Version: 1.0.2
  * Author: Direktt
  * Author URI: https://direktt.com/
  * License: GPL2
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$direktt_loyalty_program_plugin_version = "1.0.1";
+$direktt_loyalty_program_plugin_version = "1.0.2";
 $direktt_loyalty_program_github_update_cache_allowed = true;
 
 require_once plugin_dir_path( __FILE__ ) . 'direktt-github-updater/class-direktt-github-updater.php';
