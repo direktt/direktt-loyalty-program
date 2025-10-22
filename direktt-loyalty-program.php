@@ -26,6 +26,10 @@ $direktt_loyalty_program_plugin_github_updater  = new Direktt_Github_Updater(
     'direktt_loyalty_program_github_updater',
     $direktt_loyalty_program_github_update_cache_allowed );
 
+add_filter( 'plugins_api', array( $direktt_loyalty_program_plugin_github_updater, 'github_info' ), 20, 3 );
+add_filter( 'site_transient_update_plugins', array( $direktt_loyalty_program_plugin_github_updater, 'github_update' ));
+add_filter( 'upgrader_process_complete', array( $direktt_loyalty_program_plugin_github_updater, 'purge'), 10, 2 );
+
 add_action( 'plugins_loaded', 'direktt_loyalty_program_activation_check', -20 );
 
 function direktt_loyalty_program_activation_check() {
