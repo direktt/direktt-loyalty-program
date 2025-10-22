@@ -14,6 +14,18 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+$direktt_loyalty_program_plugin_version = "1.0.0";
+$direktt_loyalty_program_github_update_cache_allowed = true;
+
+require_once plugin_dir_path( __FILE__ ) . 'direktt-github-updater/class-direktt-github-updater.php';
+
+$direktt_loyalty_program_plugin_github_updater  = new Direktt_Github_Updater( 
+    $direktt_loyalty_program_plugin_version, 
+    'direktt-loyalty-program/direktt-loyalty-program.php',
+    'https://raw.githubusercontent.com/direktt/direktt-loyalty-program/master/info.json',
+    'direktt_loyalty_program_github_updater',
+    $direktt_loyalty_program_github_update_cache_allowed );
+
 add_action( 'plugins_loaded', 'direktt_loyalty_program_activation_check', -20 );
 
 function direktt_loyalty_program_activation_check() {
@@ -31,7 +43,7 @@ function direktt_loyalty_program_activation_check() {
         deactivate_plugins(plugin_basename(__FILE__));
 
         // Prevent the “Plugin activated.” notice
-        if (isset($_GET['activate'])) {
+        if (isset($_GET['activate'])) { //phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Justification: not a form processing, just removing a query var.
             unset($_GET['activate']);
         }
 
@@ -78,20 +90,20 @@ function render_loyalty_program_settings() {
     $success = false;
 
     // Handle form submission
-    if ( $_SERVER['REQUEST_METHOD'] === 'POST' && isset( $_POST['direktt_admin_loyalty_program_nonce'] ) && wp_verify_nonce( $_POST['direktt_admin_loyalty_program_nonce'], 'direktt_admin_loyalty_program_save' ) ) {
+    if ( isset( $_SERVER['REQUEST_METHOD'] ) && $_SERVER['REQUEST_METHOD'] === 'POST' && isset( $_POST['direktt_admin_loyalty_program_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['direktt_admin_loyalty_program_nonce'] ) ), 'direktt_admin_loyalty_program_save' ) ) {
         // update options based on form submission
         update_option( 'direktt_loyalty_program_categories', isset( $_POST['direktt_loyalty_program_categories'] ) ? intval( $_POST['direktt_loyalty_program_categories'] ) : 0 );
         update_option( 'direktt_loyalty_program_tags', isset( $_POST['direktt_loyalty_program_tags'] ) ? intval( $_POST['direktt_loyalty_program_tags'] ) : 0 );
-        update_option( 'direktt_loyalty_program_initial_points', intval( $_POST['direktt_loyalty_program_initial_points'] ) );
-        update_option( 'direktt_loyalty_points_rules', array_map( 'intval', $_POST['direktt_loyalty_points_rules'] ?? array() ) );
+        update_option( 'direktt_loyalty_program_initial_points', isset( $_POST['direktt_loyalty_program_initial_points'] ) ? intval( $_POST['direktt_loyalty_program_initial_points'] ) : 0 );
+        update_option( 'direktt_loyalty_points_rules', isset( $_POST['direktt_loyalty_points_rules'] ) ? array_map( 'intval', $_POST['direktt_loyalty_points_rules'] ) : array() );
         update_option( 'direktt_loyalty_user', isset( $_POST['direktt_loyalty_user'] ) ? 'yes' : 'no' );
-        update_option( 'direktt_loyalty_user_template', intval( $_POST['direktt_loyalty_user_template'] ) );
+        update_option( 'direktt_loyalty_user_template', isset( $_POST['direktt_loyalty_user_template'] ) ? intval( $_POST['direktt_loyalty_user_template'] ) : 0 );
         update_option( 'direktt_loyalty_admin', isset( $_POST['direktt_loyalty_admin'] ) ? 'yes' : 'no' );
-        update_option( 'direktt_loyalty_admin_template', intval( $_POST['direktt_loyalty_admin_template'] ) );
+        update_option( 'direktt_loyalty_admin_template', isset( $_POST['direktt_loyalty_admin_template'] ) ? intval( $_POST['direktt_loyalty_admin_template'] ) : 0 );
         update_option( 'direktt_loyalty_user_reset', isset( $_POST['direktt_loyalty_user_reset'] ) ? 'yes' : 'no' );
-        update_option( 'direktt_loyalty_user_template_reset', intval( $_POST['direktt_loyalty_user_template_reset'] ) );
+        update_option( 'direktt_loyalty_user_template_reset', isset( $_POST['direktt_loyalty_user_template_reset'] ) ? intval( $_POST['direktt_loyalty_user_template_reset'] ) : 0 );
         update_option( 'direktt_loyalty_admin_reset', isset( $_POST['direktt_loyalty_admin_reset'] ) ? 'yes' : 'no' );
-        update_option( 'direktt_loyalty_admin_template_reset', intval( $_POST['direktt_loyalty_admin_template_reset'] ) );
+        update_option( 'direktt_loyalty_admin_template_reset', isset( $_POST['direktt_loyalty_admin_template_reset'] ) ? intval( $_POST['direktt_loyalty_admin_template_reset'] ) : 0 );
         $success = true;
     }
 
@@ -116,7 +128,7 @@ function render_loyalty_program_settings() {
         'posts_per_page' => -1,
         'orderby'        => 'title',
         'order'          => 'ASC',
-        'meta_query'     => array(
+        'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- - Justification: bounded, cached, selective query on small dataset
             array(
                 'key'     => 'direkttMTType',
                 'value'   => array( 'all', 'none' ),
@@ -372,7 +384,7 @@ function render_loyalty_program_tool() {
     $loyalty_admin_reset          = get_option( 'direktt_loyalty_admin_reset', 'no' ) === 'yes';
     $loyalty_admin_template_reset = intval( get_option( 'direktt_loyalty_admin_template_reset', 0 ) );
 
-    if ( $_SERVER['REQUEST_METHOD'] === 'POST' && isset( $_POST['direktt_loyalty_points_nonce'] ) && wp_verify_nonce( $_POST['direktt_loyalty_points_nonce'], 'direktt_loyalty_points_action' ) ) {
+    if ( isset( $_SERVER['REQUEST_METHOD'] ) && $_SERVER['REQUEST_METHOD'] === 'POST' && isset( $_POST['direktt_loyalty_points_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['direktt_loyalty_points_nonce'] ) ), 'direktt_loyalty_points_action' ) ) {
         if ( isset( $_POST['points_change'] ) && $_POST['points_change'] !== '' ) {
             $change       = intval( $_POST['points_change'] );
             $user_points += $change;
@@ -415,7 +427,11 @@ function render_loyalty_program_tool() {
                 );
             }
 
-            $redirect_url = add_query_arg( 'success_flag', '1', $_SERVER['REQUEST_URI'] );
+            if ( isset( $_SERVER['REQUEST_URI'] ) ) {
+                $redirect_url = add_query_arg( 'success_flag', '1', esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) );
+            } else {
+                $redirect_url = home_url();
+            }
             wp_safe_redirect( $redirect_url );
             exit;
         }
@@ -459,7 +475,11 @@ function render_loyalty_program_tool() {
                 );
             }
 
-            $redirect_url = add_query_arg( 'success_flag', '2', $_SERVER['REQUEST_URI'] );
+            if ( isset( $_SERVER['REQUEST_URI'] ) ) {
+                $redirect_url = add_query_arg( 'success_flag', '2', esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) );
+            } else {
+                $redirect_url = home_url();
+            }
             wp_safe_redirect( $redirect_url );
             exit;
         }
@@ -467,7 +487,7 @@ function render_loyalty_program_tool() {
 
     // Check if a success message is set and display it
     if ( isset( $_GET['success_flag'] ) ) {
-        $success_flag = sanitize_text_field( $_GET['success_flag'] );
+        $success_flag = sanitize_text_field( wp_unslash( $_GET['success_flag'] ) );
         if ( $success_flag === '1' ) {
             $message = __( 'Points updated successfully. New balance: ', 'direktt-loyalty-program' ) . $user_points;
         } else {
@@ -541,9 +561,10 @@ function render_loyalty_program_tool() {
         });
     </script>
     <?php
-    echo Direktt_Public::direktt_render_confirm_popup( 'direktt-loyalty-program-confirm', __( 'Are you sure that you want to', 'direktt-loyalty-program' ) . ' __POINTS__ ' . __( 'points.', 'direktt-loyalty-program' ) );
-    echo Direktt_Public::direktt_render_confirm_popup( 'direktt-loyalty-program-reset', __( 'Are you sure that you want to reset the points.', 'direktt-loyalty-program' ) );
-    echo Direktt_Public::direktt_render_loader( __( 'Don\'t refresh the page', 'direktt-loyalty-program' ) );
+    $allowed_html = wp_kses_allowed_html( 'post' );
+    echo wp_kses( Direktt_Public::direktt_render_confirm_popup( 'direktt-loyalty-program-confirm', __( 'Are you sure that you want to', 'direktt-loyalty-program' ) . ' __POINTS__ ' . __( 'points.', 'direktt-loyalty-program' ) ), $allowed_html );
+    echo wp_kses( Direktt_Public::direktt_render_confirm_popup( 'direktt-loyalty-program-reset', __( 'Are you sure that you want to reset the points.', 'direktt-loyalty-program' ) ), $allowed_html );
+    echo wp_kses( Direktt_Public::direktt_render_loader( __( 'Don\'t refresh the page', 'direktt-loyalty-program' ) ), $allowed_html );
     ?>
     <div class="direktt-loyalty-program-wrap">
         <h2><?php echo esc_html__( 'Loyalty Program', 'direktt-loyalty-program' ); ?></h2>
