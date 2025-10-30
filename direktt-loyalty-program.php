@@ -670,9 +670,21 @@ function render_loyalty_program_tool() {
 }
 
 function direktt_loyalty_add_meta_box() {
+
+    global $post;
+
+    $user_id        = $post->ID;
+    $user_points    = intval( get_post_meta( $user_id, 'direktt_loyalty_points', true ) );
+    $initial_points = intval( get_option( 'direktt_loyalty_program_initial_points', 0 ) );
+
+    if ( $initial_points > 0 && ! $user_points ) {
+        update_post_meta( $user_id, 'direktt_loyalty_points', $initial_points );
+        $user_points = $initial_points;
+    }
+
     add_meta_box(
         'direktt_loyalty_program_meta_box',
-        esc_html__( 'Loyalty Program', 'direktt-loyalty-program' ),
+        esc_html__( 'Loyalty Program - Current Points: ', 'direktt-loyalty-program' ) . '<div class="direktt-loyalty-current-points">' . esc_html( $user_points ) . '</div>',
         'render_loyalty_program_meta_box',
         'direkttusers',
         'advanced',
@@ -694,10 +706,7 @@ function render_loyalty_program_meta_box( $post ) {
 
 	?>
     <div class="direktt-loyalty-program-meta-box">
-        <div class="direktt-loyalty-program-wrap">
-			<h2><?php echo esc_html__( 'Recent Transactions', 'direktt-loyalty-program' ); ?></h2>
-            <p><?php echo esc_html__( 'Current Points: ', 'direktt-loyalty-program' ) . '<strong>' . esc_html( $user_points ) . '</strong>'; ?></p>
-        </div>
+        
         <div class="direktt-loyalty-program-transactions">
             
             <?php
