@@ -684,7 +684,7 @@ function direktt_loyalty_add_meta_box() {
 
     add_meta_box(
         'direktt_loyalty_program_meta_box',
-        esc_html__( 'Loyalty Program - ', 'direktt-loyalty-program' ) . '<div class="direktt-loyalty-current-points">' . esc_html__( 'Current Points: ', 'direktt-loyalty-program' ) . '<strong>'. esc_html( $user_points ) . '</strong></div>',
+        esc_html__( 'Loyalty Program', 'direktt-loyalty-program' ) . '<div class="direktt-loyalty-current-points">' . esc_html__( 'Current Points:', 'direktt-loyalty-program' ) . '<strong>'. esc_html( $user_points ) . '</strong></div>',
         'render_loyalty_program_meta_box',
         'direkttusers',
         'advanced',
