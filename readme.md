@@ -15,7 +15,8 @@ A powerful WordPress plugin for running a loyalty points system, tightly integra
 ## Installation
 
 1. Install and activate the **Direktt** core plugin.
-2. Upload this plugin's folder to the `/wp-content/plugins/` directory.
+2. Download the direktt-loyalty-program.zip from the latest [release](https://github.com/direktt/direktt-loyalty-program/releases)
+2. Upload **direktt-loyalty-program.zip** either through WordPress' **Plugins > Add Plugin > Upload Plugin** or upload the contents of this direktt-loyalty-program.zip to the `/wp-content/plugins/` directory of your WordPress installation.
 3. Activate **Direktt Loyalty Program** from your WordPress plugins page.
 4. Configure the plugin under **Direktt > Settings > Loyalty Program Settings**.
 
