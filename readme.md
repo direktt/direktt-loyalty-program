@@ -26,7 +26,7 @@ A powerful WordPress plugin for running a loyalty points system, tightly integra
 
 - Find **Direktt > Settings > Loyalty Program Settings** in your WordPress admin menu.
 - Configure:
-    - Which user category/tag is considered “admin” for the loyalty program.
+    - Which user category/tag will be able to manage loyalty program.
     - Initial points for new users.
     - Add point rules (increments for add/remove points to and from the user account).
     - Set up notifications for users and admins on point changes or resets.
