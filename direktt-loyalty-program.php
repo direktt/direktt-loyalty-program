@@ -154,7 +154,7 @@ function render_loyalty_program_settings() {
         <form method="post" action="">
             <?php wp_nonce_field( 'direktt_admin_loyalty_program_save', 'direktt_admin_loyalty_program_nonce' ); ?>
 
-            <table class="form-table">
+            <table class="form-table direktt-loyalty-program-table">
                 <tr>
                     <th scope="row"><label for="direktt_loyalty_program_categories"><?php echo esc_html__( 'Category', 'direktt-loyalty-program' ); ?></label></th>
                     <td>
@@ -242,7 +242,7 @@ function render_loyalty_program_settings() {
                         <input type="checkbox" name="direktt_loyalty_user" id="direktt_loyalty_user" value="yes" <?php checked( $loyalty_user ); ?> />
                     </td>
                 </tr>
-                <tr class="direktt-settings-mt-row">
+                <tr id="direktt-loyalty-program-settings-mt-user-change-row">
                     <th scope="row"><label for="direktt_loyalty_user_template"><?php echo esc_html__( 'Subscriber Message Template', 'direktt-loyalty-program' ); ?></label></th>
                     <td>
                         <select name="direktt_loyalty_user_template" id="direktt_loyalty_user_template">
@@ -263,7 +263,7 @@ function render_loyalty_program_settings() {
                         <input type="checkbox" name="direktt_loyalty_admin" id="direktt_loyalty_admin" value="yes" <?php checked( $loyalty_admin ); ?> />
                     </td>
                 </tr>
-                <tr class="direktt-settings-mt-row">
+                <tr id="direktt-loyalty-program-settings-mt-admin-change-row">
                     <th scope="row"><label for="direktt_loyalty_admin_template"><?php echo esc_html__( 'Admin Message Template', 'direktt-loyalty-program' ); ?></label></th>
                     <td>
                         <select name="direktt_loyalty_admin_template" id="direktt_loyalty_admin_template">
@@ -284,7 +284,7 @@ function render_loyalty_program_settings() {
                         <input type="checkbox" name="direktt_loyalty_user_reset" id="direktt_loyalty_user_reset" value="yes" <?php checked( $loyalty_user_reset ); ?> />
                     </td>
                 </tr>
-                <tr class="direktt-settings-mt-row">
+                <tr id="direktt-loyalty-program-settings-mt-user-reset-row">
                     <th scope="row"><label for="direktt_loyalty_user_template_reset"><?php echo esc_html__( 'Subscriber Reset Message Template', 'direktt-loyalty-program' ); ?></label></th>
                     <td>
                         <select name="direktt_loyalty_user_template_reset" id="direktt_loyalty_user_template_reset">
@@ -304,7 +304,7 @@ function render_loyalty_program_settings() {
                         <input type="checkbox" name="direktt_loyalty_admin_reset" id="direktt_loyalty_admin_reset" value="yes" <?php checked( $loyalty_admin_reset ); ?> />
                     </td>
                 </tr>
-                <tr class="direktt-settings-mt-row">
+                <tr id="direktt-loyalty-program-settings-mt-admin-reset-row">
                     <th scope="row"><label for="direktt_loyalty_admin_template_reset"><?php echo esc_html__( 'Admin Reset Message Template', 'direktt-loyalty-program' ); ?></label></th>
                     <td>
                         <select name="direktt_loyalty_admin_template_reset" id="direktt_loyalty_admin_template_reset">
