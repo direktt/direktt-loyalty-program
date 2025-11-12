@@ -255,8 +255,8 @@ function render_loyalty_program_settings() {
                             <?php endforeach; ?>
                         </select>
                         <p class="description"><?php echo esc_html__( 'You can use following dynamic placeholders in this template:', 'direktt-loyalty-program' ); ?></p>
-                        <p class="description"><strong><?php echo esc_html( '#change#' ); ?></strong><?php echo esc_html__( ' - number of points added / deducted.', 'direktt-loyalty-program' ); ?></p>
-                        <p class="description"><strong><?php echo esc_html( '#points#' ); ?></strong><?php echo esc_html__( ' - new points balance', 'direktt-loyalty-program' ); ?></p>
+                        <p class="description"><code><?php echo esc_html( '#change#' ); ?></code><?php echo esc_html__( ' - number of points added / deducted.', 'direktt-loyalty-program' ); ?></p>
+                        <p class="description"><code><?php echo esc_html( '#points#' ); ?></code><?php echo esc_html__( ' - new points balance', 'direktt-loyalty-program' ); ?></p>
                     </td>
                 </tr>
                 <tr>
@@ -277,10 +277,10 @@ function render_loyalty_program_settings() {
                             <?php endforeach; ?>
                         </select>
                         <p class="description"><?php echo esc_html__( 'You can use following dynamic placeholders in this template:', 'direktt-loyalty-program' ); ?></p>
-                        <p class="description"><strong><?php echo esc_html( '#change#' ); ?></strong> <?php echo esc_html__( ' - number of points added / deducted.', 'direktt-loyalty-program' ); ?></p>
-                        <p class="description"><strong><?php echo esc_html( '#points#' ); ?></strong> <?php echo esc_html__( ' - new points balance', 'direktt-loyalty-program' ); ?></p>
-                        <p class="description"><strong><?php echo esc_html( '#display_name#' ); ?></strong> <?php echo esc_html__( ' - user display name', 'direktt-loyalty-program' ); ?></p>
-                        <p class="description"><strong><?php echo esc_html( '#subscription_id#' ); ?></strong> <?php echo esc_html__( ' - user subscription id.', 'direktt-loyalty-program' ); ?></p>
+                        <p class="description"><code><?php echo esc_html( '#change#' ); ?></code> <?php echo esc_html__( ' - number of points added / deducted.', 'direktt-loyalty-program' ); ?></p>
+                        <p class="description"><code><?php echo esc_html( '#points#' ); ?></code> <?php echo esc_html__( ' - new points balance', 'direktt-loyalty-program' ); ?></p>
+                        <p class="description"><code><?php echo esc_html( '#display_name#' ); ?></code> <?php echo esc_html__( ' - user display name', 'direktt-loyalty-program' ); ?></p>
+                        <p class="description"><code><?php echo esc_html( '#subscription_id#' ); ?></code> <?php echo esc_html__( ' - user subscription id.', 'direktt-loyalty-program' ); ?></p>
                     </td>
                 </tr>
                 <tr>
@@ -301,7 +301,7 @@ function render_loyalty_program_settings() {
                             <?php endforeach; ?>
                         </select>
                         <p class="description"><?php echo esc_html__( 'You can use following dynamic placeholders in this template:', 'direktt-loyalty-program' ); ?></p>
-                        <p class="description"><strong><?php echo esc_html( '#points#' ); ?></strong> <?php echo esc_html__( ' - new points balance', 'direktt-loyalty-program' ); ?></p>
+                        <p class="description"><code><?php echo esc_html( '#points#' ); ?></code> <?php echo esc_html__( ' - new points balance', 'direktt-loyalty-program' ); ?></p>
                     </td>
                 </tr>
                 <tr>
@@ -322,9 +322,9 @@ function render_loyalty_program_settings() {
                             <?php endforeach; ?>
                         </select>
                         <p class="description"><?php echo esc_html__( 'You can use following dynamic placeholders in this template:', 'direktt-loyalty-program' ); ?></p>
-                        <p class="description"><strong><?php echo esc_html( '#points#' ); ?></strong> <?php echo esc_html__( ' - new points balance', 'direktt-loyalty-program' ); ?></p>
-                        <p class="description"><strong><?php echo esc_html( '#display_name#' ); ?></strong> <?php echo esc_html__( ' - user display name', 'direktt-loyalty-program' ); ?></p>
-                        <p class="description"><strong><?php echo esc_html( '#subscription_id#' ); ?></strong><?php echo esc_html__( ' - user subscription id.', 'direktt-loyalty-program' ); ?></p>
+                        <p class="description"><code><?php echo esc_html( '#points#' ); ?></code> <?php echo esc_html__( ' - new points balance', 'direktt-loyalty-program' ); ?></p>
+                        <p class="description"><code><?php echo esc_html( '#display_name#' ); ?></code> <?php echo esc_html__( ' - user display name', 'direktt-loyalty-program' ); ?></p>
+                        <p class="description"><code><?php echo esc_html( '#subscription_id#' ); ?></code><?php echo esc_html__( ' - user subscription id.', 'direktt-loyalty-program' ); ?></p>
                     </td>
                 </tr>
             </table>
