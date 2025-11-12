@@ -1,7 +1,5 @@
 # Direktt Loyalty Program
 
-A powerful WordPress plugin for running a loyalty points system, tightly integrated with the [Direktt WordPress Plugin](https://direktt.com/).
-
 Direktt Loyalty Program is a WordPress plugin that brings an easy-to-manage loyalty points system right into your Direktt-powered channel. Fully integrated with the [Direktt mobile app](https://direktt.com), it lets you award, redeem, and track loyalty points for your subscribers, automate notifications, and offer a transparent rewards experience — all managed seamlessly via mobile or wp-admin. Perfect for growing customer engagement and keeping your best clients coming back.
 
 It is tightly integrated with the [Direktt WordPress Plugin](https://wordpress.org/plugins/direktt/).  
