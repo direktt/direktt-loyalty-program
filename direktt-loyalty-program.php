@@ -233,17 +233,18 @@ function render_loyalty_program_settings() {
                                 });
                             })(jQuery);
                         </script>
-                        <p class="description"><?php echo esc_html__( 'Add rules for awarding points (e.g. 10).', 'direktt-loyalty-program' ); ?></p>
+                        <p class="description"><?php echo esc_html__( 'Add rules for awarding (e.g. 10) and deducting (e.g. -10) points.', 'direktt-loyalty-program' ); ?></p>
+                        <p class="description"><?php echo esc_html__( 'The rules will be displayed as buttons to salespersons in User profile Loyalty Program tool', 'direktt-loyalty-program' ); ?></p>
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row"><label for="direktt_loyalty_user"><?php echo esc_html__( 'Send to Subscriber', 'direktt-loyalty-program' ); ?></label></th>
+                    <th scope="row"><label for="direktt_loyalty_user"><?php echo esc_html__( 'Send Message to Subscriber on Points Addition / Deduction ', 'direktt-loyalty-program' ); ?></label></th>
                     <td>
                         <input type="checkbox" name="direktt_loyalty_user" id="direktt_loyalty_user" value="yes" <?php checked( $loyalty_user ); ?> />
                     </td>
                 </tr>
                 <tr id="direktt-loyalty-program-settings-mt-user-change-row">
-                    <th scope="row"><label for="direktt_loyalty_user_template"><?php echo esc_html__( 'Subscriber Message Template', 'direktt-loyalty-program' ); ?></label></th>
+                    <th scope="row"><label for="direktt_loyalty_user_template"><?php echo esc_html__( 'Subscriber Points Addition / Deduction Message Template', 'direktt-loyalty-program' ); ?></label></th>
                     <td>
                         <select name="direktt_loyalty_user_template" id="direktt_loyalty_user_template">
                             <option value="0"><?php echo esc_html__( 'Select Template', 'direktt-loyalty-program' ); ?></option>
@@ -253,18 +254,19 @@ function render_loyalty_program_settings() {
                                 </option>
                             <?php endforeach; ?>
                         </select>
-                        <p class="description"><?php echo esc_html__( 'In message template you can use', 'direktt-loyalty-program' ); ?> <?php echo esc_html( '#change#' ); ?> <?php echo esc_html__( 'which will be replaced with number of points changed.', 'direktt-loyalty-program' ); ?></p>
-                        <p class="description"><?php echo esc_html__( 'And you can use', 'direktt-loyalty-program' ); ?> <?php echo esc_html( '#points#' ); ?> <?php echo esc_html__( 'for new points balance.', 'direktt-loyalty-program' ); ?></p>
+                        <p class="description"><?php echo esc_html__( 'You can use following dynamic placeholders in this template:', 'direktt-loyalty-program' ); ?></p>
+                        <p class="description"><strong><?php echo esc_html( '#change#' ); ?></strong><?php echo esc_html__( ' - number of points added / deducted.', 'direktt-loyalty-program' ); ?></p>
+                        <p class="description"><strong><?php echo esc_html( '#points#' ); ?></strong><?php echo esc_html__( ' - new points balance', 'direktt-loyalty-program' ); ?></p>
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row"><label for="direktt_loyalty_admin"><?php echo esc_html__( 'Send to Admin', 'direktt-loyalty-program' ); ?></label></th>
+                    <th scope="row"><label for="direktt_loyalty_admin"><?php echo esc_html__( 'Send Notification to Admin on Points Addition / Deduction', 'direktt-loyalty-program' ); ?></label></th>
                     <td>
                         <input type="checkbox" name="direktt_loyalty_admin" id="direktt_loyalty_admin" value="yes" <?php checked( $loyalty_admin ); ?> />
                     </td>
                 </tr>
                 <tr id="direktt-loyalty-program-settings-mt-admin-change-row">
-                    <th scope="row"><label for="direktt_loyalty_admin_template"><?php echo esc_html__( 'Admin Message Template', 'direktt-loyalty-program' ); ?></label></th>
+                    <th scope="row"><label for="direktt_loyalty_admin_template"><?php echo esc_html__( 'Admin Points Addition / Deduction Message Template', 'direktt-loyalty-program' ); ?></label></th>
                     <td>
                         <select name="direktt_loyalty_admin_template" id="direktt_loyalty_admin_template">
                             <option value="0"><?php echo esc_html__( 'Select Template', 'direktt-loyalty-program' ); ?></option>
@@ -274,18 +276,21 @@ function render_loyalty_program_settings() {
                                 </option>
                             <?php endforeach; ?>
                         </select>
-                        <p class="description"><?php echo esc_html__( 'In message template you can use', 'direktt-loyalty-program' ); ?> <?php echo esc_html( '#change#' ); ?> <?php echo esc_html__( 'which will be replaced with number of points changed.', 'direktt-loyalty-program' ); ?></p>
-                        <p class="description"><?php echo esc_html( '#points#' ); ?> <?php echo esc_html__( 'for new points balance,', 'direktt-loyalty-program' ); ?> <?php echo esc_html( '#display_name#' ); ?> <?php echo esc_html__( 'for display name, and', 'direktt-loyalty-program' ); ?> <?php echo esc_html( '#subscription_id#' ); ?> <?php echo esc_html__( 'for subscription id.', 'direktt-loyalty-program' ); ?></p>
+                        <p class="description"><?php echo esc_html__( 'You can use following dynamic placeholders in this template:', 'direktt-loyalty-program' ); ?></p>
+                        <p class="description"><strong><?php echo esc_html( '#change#' ); ?></strong> <?php echo esc_html__( ' - number of points added / deducted.', 'direktt-loyalty-program' ); ?></p>
+                        <p class="description"><strong><?php echo esc_html( '#points#' ); ?></strong> <?php echo esc_html__( ' - new points balance', 'direktt-loyalty-program' ); ?></p>
+                        <p class="description"><strong><?php echo esc_html( '#display_name#' ); ?></strong> <?php echo esc_html__( ' - user display name', 'direktt-loyalty-program' ); ?></p>
+                        <p class="description"><strong><?php echo esc_html( '#subscription_id#' ); ?></strong> <?php echo esc_html__( ' - user subscription id.', 'direktt-loyalty-program' ); ?></p>
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row"><label for="direktt_loyalty_user_reset"><?php echo esc_html__( 'Send reset message to Subscriber', 'direktt-loyalty-program' ); ?></label></th>
+                    <th scope="row"><label for="direktt_loyalty_user_reset"><?php echo esc_html__( 'Send Message to Subscriber on Points Reset', 'direktt-loyalty-program' ); ?></label></th>
                     <td>
                         <input type="checkbox" name="direktt_loyalty_user_reset" id="direktt_loyalty_user_reset" value="yes" <?php checked( $loyalty_user_reset ); ?> />
                     </td>
                 </tr>
                 <tr id="direktt-loyalty-program-settings-mt-user-reset-row">
-                    <th scope="row"><label for="direktt_loyalty_user_template_reset"><?php echo esc_html__( 'Subscriber Reset Message Template', 'direktt-loyalty-program' ); ?></label></th>
+                    <th scope="row"><label for="direktt_loyalty_user_template_reset"><?php echo esc_html__( 'Subscriber Points Reset Message Template', 'direktt-loyalty-program' ); ?></label></th>
                     <td>
                         <select name="direktt_loyalty_user_template_reset" id="direktt_loyalty_user_template_reset">
                             <option value="0"><?php echo esc_html__( 'Select Template', 'direktt-loyalty-program' ); ?></option>
@@ -295,17 +300,18 @@ function render_loyalty_program_settings() {
                                 </option>
                             <?php endforeach; ?>
                         </select>
-                        <p class="description"><?php echo esc_html__( 'In message template you can use', 'direktt-loyalty-program' ); ?> <?php echo esc_html( '#points#' ); ?> <?php echo esc_html__( 'for new points balance.', 'direktt-loyalty-program' ); ?></p>
+                        <p class="description"><?php echo esc_html__( 'You can use following dynamic placeholders in this template:', 'direktt-loyalty-program' ); ?></p>
+                        <p class="description"><strong><?php echo esc_html( '#points#' ); ?></strong> <?php echo esc_html__( ' - new points balance', 'direktt-loyalty-program' ); ?></p>
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row"><label for="direktt_loyalty_admin_reset"><?php echo esc_html__( 'Send reset message to Admin', 'direktt-loyalty-program' ); ?></label></th>
+                    <th scope="row"><label for="direktt_loyalty_admin_reset"><?php echo esc_html__( 'Notification to Admin on Points Reset', 'direktt-loyalty-program' ); ?></label></th>
                     <td>
                         <input type="checkbox" name="direktt_loyalty_admin_reset" id="direktt_loyalty_admin_reset" value="yes" <?php checked( $loyalty_admin_reset ); ?> />
                     </td>
                 </tr>
                 <tr id="direktt-loyalty-program-settings-mt-admin-reset-row">
-                    <th scope="row"><label for="direktt_loyalty_admin_template_reset"><?php echo esc_html__( 'Admin Reset Message Template', 'direktt-loyalty-program' ); ?></label></th>
+                    <th scope="row"><label for="direktt_loyalty_admin_template_reset"><?php echo esc_html__( 'Admin Points Reset Message Template', 'direktt-loyalty-program' ); ?></label></th>
                     <td>
                         <select name="direktt_loyalty_admin_template_reset" id="direktt_loyalty_admin_template_reset">
                             <option value="0"><?php echo esc_html__( 'Select Template', 'direktt-loyalty-program' ); ?></option>
@@ -315,7 +321,10 @@ function render_loyalty_program_settings() {
                                 </option>
                             <?php endforeach; ?>
                         </select>
-                        <p class="description"><?php echo esc_html__( 'In message template you can use', 'direktt-loyalty-program' ); ?> <?php echo esc_html( '#points#' ); ?> <?php echo esc_html__( 'for new points balance,', 'direktt-loyalty-program' ); ?> <?php echo esc_html( '#display_name#' ); ?> <?php echo esc_html__( 'for display name, and', 'direktt-loyalty-program' ); ?> <?php echo esc_html( '#subscription_id#' ); ?> <?php echo esc_html__( 'for subscription id.', 'direktt-loyalty-program' ); ?></p>
+                        <p class="description"><?php echo esc_html__( 'You can use following dynamic placeholders in this template:', 'direktt-loyalty-program' ); ?></p>
+                        <p class="description"><strong><?php echo esc_html( '#points#' ); ?></strong> <?php echo esc_html__( ' - new points balance', 'direktt-loyalty-program' ); ?></p>
+                        <p class="description"><strong><?php echo esc_html( '#display_name#' ); ?></strong> <?php echo esc_html__( ' - user display name', 'direktt-loyalty-program' ); ?></p>
+                        <p class="description"><strong><?php echo esc_html( '#subscription_id#' ); ?></strong><?php echo esc_html__( ' - user subscription id.', 'direktt-loyalty-program' ); ?></p>
                     </td>
                 </tr>
             </table>
