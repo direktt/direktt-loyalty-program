@@ -68,7 +68,7 @@ Direktt Message templates support following dynamic placeholders:
 
 ## Transaction Logs
 
-For every points change or reset, a log entry is made with the reference to admin user who made the transaction, change amount, current balance, and timestamp.
+For every points change or reset, a log entry is created with the reference to the user who initiated the transaction, change amount, current balance, and timestamp.
 
 ---
 
