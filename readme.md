@@ -53,27 +53,31 @@ https://github.com/direktt/direktt-loyalty-program/wiki
 
 ### Shortcode (Front End)
 
-Show the loyalty points account and recent transaction history to a Direktt user:
-
 ```[direktt_loyalty_program_service]```
+
+Using this shortcode, you can display the current loyalty account balance and recent transaction history to a Direktt user
 
 ## Notification Templates
 
 Direktt Message templates support following dynamic placeholders:
 
-- `#change#` — number of points added/removed
-- `#points#` — new points balance
-- Other admin templates: `#display_name#`, `#subscription_id#`
+- `#change#` — number of loyalty points added/removed in current transaction
+- `#points#` — new points balance after current transaction
+- `#display_name#` - display name of the subsriber
+- `#subscription_id#` - subscription id of the subscriber
 
 ## Transaction Logs
 
-For every points change or reset, an entry is made with admin name, change amount, balance, and timestamp.
+For every points change or reset, a log entry is made with the reference to admin user who made the transaction, change amount, current balance, and timestamp.
 
 ---
 
 ## Updating
 
-The plugin supports updating directly from this GitHub repository.
+The plugin supports updates directly from WordPress admin console.  
+
+You can find all plugin releases in the Releases section of this repository:  
+https://github.com/direktt/direktt-loyalty-program/releases.
 
 ---
 
@@ -85,4 +89,9 @@ GPL-2.0-or-later
 
 ## Support
 
-Contact [Direktt](https://direktt.com/) for questions, issues, or contributions.
+Please use Issues section of this repository for any issue you might have:  
+https://github.com/direktt/direktt-loyalty-program/issues.  
+
+Join Direktt Community on Discord - [Direktt Discord Server](https://discord.gg/xaFWtbpkWp)  
+
+Contact [Direktt](https://direktt.com/) for general questions, issues, or contributions.
