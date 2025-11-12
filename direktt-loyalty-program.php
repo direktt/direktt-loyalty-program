@@ -170,7 +170,7 @@ function render_loyalty_program_settings() {
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row"><label for="direktt_loyalty_program_tags"><?php echo esc_html__( 'Salesperson tag', 'direktt-loyalty-program' ); ?></label></th>
+                    <th scope="row"><label for="direktt_loyalty_program_tags"><?php echo esc_html__( 'Salesperson Tag', 'direktt-loyalty-program' ); ?></label></th>
                     <td>
                         <select name="direktt_loyalty_program_tags" id="direktt_loyalty_program_tags">
                             <option value="0"><?php echo esc_html__( 'Select Tag', 'direktt-loyalty-program' ); ?></option>
@@ -184,7 +184,7 @@ function render_loyalty_program_settings() {
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row"><label for="direktt_loyalty_program_initial_points"><?php echo esc_html__( 'Initial Numer of Points', 'direktt-loyalty-program' ); ?></label></th>
+                    <th scope="row"><label for="direktt_loyalty_program_initial_points"><?php echo esc_html__( 'Initial Number of Points', 'direktt-loyalty-program' ); ?></label></th>
                     <td>
                         <input type="number" name="direktt_loyalty_program_initial_points" id="direktt_loyalty_program_initial_points" value="<?php echo esc_attr( $initial_points ); ?>" min="0" />
                     </td>
