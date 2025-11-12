@@ -1,15 +1,24 @@
 # Direktt Loyalty Program
 
-A powerful WordPress plugin for running a loyalty points system, tightly integrated with the [Direktt WordPress Plugin](https://direktt.com/).
+A powerful WordPress plugin for running a loyalty points system, tightly integrated with the [Direktt WordPress Plugin](https://direktt.com/).  
 
-- **Award/reduce loyalty points** for users via the admin interface and custom user profile tool.
-- **Send customizable notifications** to users and admins on point changes and resets.
-- **Review full transaction history** for every user via wp-admin or user profile tool.
-- **Display loyalty points & history** to users via a simple shortcode.
+It is tightly integrated with the [Direktt WordPress Plugin](https://wordpress.org/plugins/direktt/).  
+
+With Loyalty Program you can:
+
+- **Award/reduce loyalty points** to channel subscribers using Direktt mobile app or wp-admin.
+- **Set up customizable automated notifications** to subscribers and admins on point changes and award redemptions.
+- **Review complete point transaction history** for every subscriber via Direktt mobile app or wp-admin.
+- **Display current loyalty account balance & transaction history** to users within Direktt mobile app.
+
+## Documentation
+
+You can find the detailed plugin documentation, guides and tutorials in the Wiki section:  
+https://github.com/direktt/direktt-loyalty-program/wiki
 
 ## Requirements
 
-- WordPress 5.0 or higher
+- WordPress 5.6 or higher
 - The [Direktt Plugin](https://wordpress.org/plugins/direktt/) (must be active)
 
 ## Installation
@@ -22,7 +31,7 @@ A powerful WordPress plugin for running a loyalty points system, tightly integra
 
 ## Usage
 
-### Admin Interface
+### Plugin Settings
 
 - Find **Direktt > Settings > Loyalty Program Settings** in your WordPress admin menu.
 - Configure:
