@@ -35,14 +35,19 @@ https://github.com/direktt/direktt-loyalty-program/wiki
 
 - Find **Direktt > Settings > Loyalty Program Settings** in your WordPress admin menu.
 - Configure:
-    - Which user category/tag will be able to manage loyalty program.
-    - Initial points for new users.
-    - Add point rules (increments for add/remove points to and from the user account).
-    - Set up notifications for users and admins on point changes or resets.
+    - Direktt user category/tag allowed to manage loyalty program.
+    - Initial points balance for new users.
+    - Point rules - admin buttons for increments to add/remove points to and from the user account.
+    - Notifications for users and channel admin on point changes, award redemptions or point resets.
 
-### Points Management
+### Workflow
 
-- Access a user profile via the Direktt User profile or wp-admin.
+- Award new loyalty points to users online or in-store:
+    1. User scans QR code online or in-store using Direktt mobile app and gets loyalty points or
+    1. User makes a purchase or presents coupon in-store. Salesperson scans user's memebership QR code and adds points to user's loyalty account within Direktt mobile app. 
+- Users wants to redeem award:
+    1. Salesperson scans user's memebership QR code and verifies current loyalty balance.
+    1. Salesperson issues an award and resets / removes respective number of points from user's loyalty account using Direktt mobile app.    
 - Add or remove points using configured rules.
 - Reset user points to initial value when users reedem Awards.
 - All actions are logged in the user’s **transaction history**.
