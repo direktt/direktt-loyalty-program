@@ -156,7 +156,7 @@ function render_loyalty_program_settings() {
 
             <table class="form-table direktt-loyalty-program-table">
                 <tr>
-                    <th scope="row"><label for="direktt_loyalty_program_categories"><?php echo esc_html__( 'Category', 'direktt-loyalty-program' ); ?></label></th>
+                    <th scope="row"><label for="direktt_loyalty_program_categories"><?php echo esc_html__( 'Salesperson Category', 'direktt-loyalty-program' ); ?></label></th>
                     <td>
                         <select name="direktt_loyalty_program_categories" id="direktt_loyalty_program_categories">
                             <option value="0"><?php echo esc_html__( 'Select Category', 'direktt-loyalty-program' ); ?></option>
@@ -166,11 +166,11 @@ function render_loyalty_program_settings() {
                                 </option>
                             <?php endforeach; ?>
                         </select>
-                        <p class="description"><?php echo esc_html__( 'Users with this category will be admin of Loyalty Program.', 'direktt-loyalty-program' ); ?></p>
+                        <p class="description"><?php echo esc_html__( 'Users with this category will be able to manage user loyalty accounts.', 'direktt-loyalty-program' ); ?></p>
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row"><label for="direktt_loyalty_program_tags"><?php echo esc_html__( 'Tag', 'direktt-loyalty-program' ); ?></label></th>
+                    <th scope="row"><label for="direktt_loyalty_program_tags"><?php echo esc_html__( 'Salesperson tag', 'direktt-loyalty-program' ); ?></label></th>
                     <td>
                         <select name="direktt_loyalty_program_tags" id="direktt_loyalty_program_tags">
                             <option value="0"><?php echo esc_html__( 'Select Tag', 'direktt-loyalty-program' ); ?></option>
@@ -180,22 +180,22 @@ function render_loyalty_program_settings() {
                                 </option>
                             <?php endforeach; ?>
                         </select>
-                        <p class="description"><?php echo esc_html__( 'Users with this tag will be admin of Loyalty Program.', 'direktt-loyalty-program' ); ?></p>
+                        <p class="description"><?php echo esc_html__( 'Users with this tag will be able to manage user loyalty accounts.', 'direktt-loyalty-program' ); ?></p>
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row"><label for="direktt_loyalty_program_initial_points"><?php echo esc_html__( 'Initial Points', 'direktt-loyalty-program' ); ?></label></th>
+                    <th scope="row"><label for="direktt_loyalty_program_initial_points"><?php echo esc_html__( 'Initial Numer of Points', 'direktt-loyalty-program' ); ?></label></th>
                     <td>
                         <input type="number" name="direktt_loyalty_program_initial_points" id="direktt_loyalty_program_initial_points" value="<?php echo esc_attr( $initial_points ); ?>" min="0" />
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row"><?php echo esc_html__( 'Points Rules', 'direktt-loyalty-program' ); ?></th>
+                    <th scope="row"><?php echo esc_html__( 'Point Rules', 'direktt-loyalty-program' ); ?></th>
                     <td>
                         <div id="direktt_points_repeater">
-                            <!-- Existing points rules will be rendered here -->
+                            <!-- Existing point rules will be rendered here -->
                         </div>
-                        <button type="button" class="button" id="add_points_rule"><?php echo esc_html__( 'Add Points Rule', 'direktt-loyalty-program' ); ?></button>
+                        <button type="button" class="button" id="add_points_rule"><?php echo esc_html__( 'Add Point Rule', 'direktt-loyalty-program' ); ?></button>
                         <script>
                             (function($) {
                         
