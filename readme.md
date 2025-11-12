@@ -44,9 +44,9 @@ https://github.com/direktt/direktt-loyalty-program/wiki
 
 - **Award new loyalty points to users online or in-store:**
     1. Using Direktt mobile app, user scans QR code online or in-store and gets loyalty points or
-    1. User makes a purchase or presents a coupon in-store. Salesperson scans user's memebership QR code and adds points to user's loyalty account using Direktt mobile app. Both user and admin receive automated message notifications.
+    1. User makes a purchase or presents a coupon in-store. Salesperson scans user's membership QR code and adds points to user's loyalty account using Direktt mobile app. Both user and admin receive automated message notifications.
 - **Users wants to redeem an award:**
-    - Salesperson scans user's memebership QR code and verifies current loyalty balance. Salesperson issues an award and resets / removes respective number of points from user's loyalty account using Direktt mobile app. Both user and admin receive automated message notifications
+    - Salesperson scans user's membership QR code and verifies current loyalty balance. Salesperson issues an award and resets / removes respective number of points from user's loyalty account using Direktt mobile app. Both user and admin receive automated message notifications
 - **User wants to check its loyaly balance**.
     - User can always check its loyalty account balance using Direktt mobile app 
 - All actions are logged in the user’s **transaction history**.
