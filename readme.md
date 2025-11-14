@@ -63,7 +63,7 @@ Direktt Message templates support following dynamic placeholders:
 
 - `#change#` — number of loyalty points added/removed in current transaction
 - `#points#` — new points balance after current transaction
-- `#display_name#` - display name of the subsriber
+- `#display_name#` - display name of the subscriber
 - `#subscription_id#` - subscription id of the subscriber
 
 ## Transaction Logs
