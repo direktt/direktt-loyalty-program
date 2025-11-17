@@ -160,8 +160,8 @@ function render_loyalty_program_settings() {
                     <th scope="row"><label for="direktt_loyalty_program_categories"><?php echo esc_html__( 'Users to Manage Loyalty Program', 'direktt-loyalty-program' ); ?></label></th>
                     <td>
                        <fieldset class="direktt-category-tag-fieldset">
-                            <legend class="screen-reader-text"><span><?php echo esc_html__( 'Users to Manage Loyalty Program', 'direktt-customer-review' ); ?></span></legend>
-                            <label for="direktt_loyalty_program_categories"><?php echo esc_html__( 'Category', 'direktt-customer-review' ); ?></label>
+                            <legend class="screen-reader-text"><span><?php echo esc_html__( 'Users to Manage Loyalty Program', 'direktt-loyalty-program' ); ?></span></legend>
+                            <label for="direktt_loyalty_program_categories"><?php echo esc_html__( 'Category', 'direktt-loyalty-program' ); ?></label>
                             <select name="direktt_loyalty_program_categories" id="direktt_loyalty_program_categories">
                                 <option value="0"><?php echo esc_html__( 'Select Category', 'direktt-loyalty-program' ); ?></option>
                                 <?php foreach ( $all_categories as $category ) : ?>
@@ -171,7 +171,7 @@ function render_loyalty_program_settings() {
                                 <?php endforeach; ?>
                             </select>
                             <br>
-                            <label for="direktt_loyalty_program_tags"><?php echo esc_html__( 'Tag', 'direktt-customer-review' ); ?></label>
+                            <label for="direktt_loyalty_program_tags"><?php echo esc_html__( 'Tag', 'direktt-loyalty-program' ); ?></label>
                             <select name="direktt_loyalty_program_tags" id="direktt_loyalty_program_tags">
                                 <option value="0"><?php echo esc_html__( 'Select Tag', 'direktt-loyalty-program' ); ?></option>
                                 <?php foreach ( $all_tags as $tag ) : ?>
