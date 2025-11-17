@@ -207,7 +207,7 @@ function render_loyalty_program_settings() {
                                     <label>
                                         <input type="number" name="direktt_loyalty_points_rules[]" value="${value ? value : 1}" placeholder="Points" min="1" />
                                     </label>
-                                    <button type="button" class="button direktt_loyalty_program_remove_points_rule"><?php echo esc_js( __( 'Remove', 'direktt-loyalty-program' ) ); ?></button>
+                                    <a class="dashicons dashicons-no button-link-delete direktt_loyalty_program_remove_points_rule" title="Remove"></a>
                                 </div>`;
                                 }
 
