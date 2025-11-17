@@ -159,7 +159,7 @@ function render_loyalty_program_settings() {
                 <tr>
                     <th scope="row"><label for="direktt_loyalty_program_categories"><?php echo esc_html__( 'Users to Manage Loyalty Program', 'direktt-loyalty-program' ); ?></label></th>
                     <td>
-                       <fieldset>
+                       <fieldset class="direktt-category-tag-fieldset">
                             <legend class="screen-reader-text"><span><?php echo esc_html__( 'Users to Manage Loyalty Program', 'direktt-customer-review' ); ?></span></legend>
                             <label for="direktt_loyalty_program_categories"><?php echo esc_html__( 'Category', 'direktt-customer-review' ); ?></label>
                             <select name="direktt_loyalty_program_categories" id="direktt_loyalty_program_categories">
@@ -252,7 +252,7 @@ function render_loyalty_program_settings() {
                     <th scope="row"><label for="direktt_loyalty_user"><?php echo esc_html__( 'Enable', 'direktt-loyalty-program' ); ?></label></th>
                     <td>
                         <input type="checkbox" name="direktt_loyalty_user" id="direktt_loyalty_user" value="yes" <?php checked( $loyalty_user ); ?> />
-                        <label for="direktt_loyalty_user"><?php echo esc_html__( 'When enabled, a notification will be sent to the subscriber when points are added or deducted.', 'direktt-loyalty-program' ); ?></label>
+                        <label for="direktt_loyalty_user"><span class="description"><?php echo esc_html__( 'When enabled, a notification will be sent to the subscriber when points are added or deducted.', 'direktt-loyalty-program' ); ?></span></label>
                     </td>
                 </tr>
                 <tr id="direktt-loyalty-program-settings-mt-user-change-row">
@@ -278,7 +278,7 @@ function render_loyalty_program_settings() {
                     <th scope="row"><label for="direktt_loyalty_admin"><?php echo esc_html__( 'Enable', 'direktt-loyalty-program' ); ?></label></th>
                     <td>
                         <input type="checkbox" name="direktt_loyalty_admin" id="direktt_loyalty_admin" value="yes" <?php checked( $loyalty_admin ); ?> />
-                        <label for="direktt_loyalty_user"><?php echo esc_html__( 'When enabled, a notification will be sent to the admin when points are added or deducted.', 'direktt-loyalty-program' ); ?></label>
+                        <label for="direktt_loyalty_admin"><span class="description"><?php echo esc_html__( 'When enabled, a notification will be sent to the admin when points are added or deducted.', 'direktt-loyalty-program' ); ?></span></label>
                     </td>
                 </tr>
                 <tr id="direktt-loyalty-program-settings-mt-admin-change-row">
@@ -307,7 +307,7 @@ function render_loyalty_program_settings() {
                     <th scope="row"><label for="direktt_loyalty_user_reset"><?php echo esc_html__( 'Enable', 'direktt-loyalty-program' ); ?></label></th>
                     <td>
                         <input type="checkbox" name="direktt_loyalty_user_reset" id="direktt_loyalty_user_reset" value="yes" <?php checked( $loyalty_user_reset ); ?> />
-                        <label for="direktt_loyalty_user_reset"><?php echo esc_html__( 'When enabled, a notification will be sent to the subscriber when points are reset.', 'direktt-loyalty-program' ); ?></label>
+                        <label for="direktt_loyalty_user_reset"><span class="description"><?php echo esc_html__( 'When enabled, a notification will be sent to the subscriber when points are reset.', 'direktt-loyalty-program' ); ?></span></label>
                     </td>
                 </tr>
                 <tr id="direktt-loyalty-program-settings-mt-user-reset-row">
@@ -332,7 +332,7 @@ function render_loyalty_program_settings() {
                     <th scope="row"><label for="direktt_loyalty_admin_reset"><?php echo esc_html__( 'Enable', 'direktt-loyalty-program' ); ?></label></th>
                     <td>
                         <input type="checkbox" name="direktt_loyalty_admin_reset" id="direktt_loyalty_admin_reset" value="yes" <?php checked( $loyalty_admin_reset ); ?> />
-                        <label for="direktt_loyalty_admin_reset"><?php echo esc_html__( 'When enabled, a notification will be sent to the admin when points are reset.', 'direktt-loyalty-program' ); ?></label>
+                        <label for="direktt_loyalty_admin_reset"><span class="description"><?php echo esc_html__( 'When enabled, a notification will be sent to the admin when points are reset.', 'direktt-loyalty-program' ); ?></span></label>
                     </td>
                 </tr>
                 <tr id="direktt-loyalty-program-settings-mt-admin-reset-row">
