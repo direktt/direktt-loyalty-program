@@ -239,7 +239,6 @@ function render_loyalty_program_settings() {
                             })(jQuery);
                         </script>
                         <p class="description"><?php echo esc_html__( 'Add rules for awarding (e.g. +10) and deducting (e.g. -10) points.', 'direktt-loyalty-program' ); ?></p>
-                        <p class="description"><?php echo esc_html__( 'You\'ll need to add only one rule for both + and - values (e.g. if you add rule with value 5, both +5 and -5 buttons will be displayed).', 'direktt-loyalty-program' ); ?></p>
                         <p class="description"><?php echo esc_html__( 'The rules will be displayed as buttons to salespersons in User profile Loyalty Program tool', 'direktt-loyalty-program' ); ?></p>
                     </td>
                 </tr>
