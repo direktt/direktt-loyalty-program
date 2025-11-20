@@ -185,7 +185,7 @@ function render_loyalty_program_settings() {
                     </td>
                 </tr>
             </table>
-            <h2 class="title"><?php echo esc_html__( 'Points settings', 'direktt-loyalty-program' ); ?></h2>
+            <h2 class="title"><?php echo esc_html__( 'Points Settings', 'direktt-loyalty-program' ); ?></h2>
             <table class="form-table direktt-loyalty-program-table">
                 <tr>
                     <th scope="row"><label for="direktt_loyalty_program_initial_points"><?php echo esc_html__( 'Initial Number of Points', 'direktt-loyalty-program' ); ?></label></th>
@@ -244,22 +244,20 @@ function render_loyalty_program_settings() {
                     </td>
                 </tr>
             </table>
-            <h2 class="title"><?php echo esc_html__( 'Messages', 'direktt-loyalty-program' ); ?></h2>
-            <h3><?php echo esc_html__( 'Points Addition / Deduction Messages', 'direktt-loyalty-program' ); ?></h3>
-            <h3><?php echo esc_html__( 'Send Message to Subscriber', 'direktt-loyalty-program' ); ?></h3> 
+            <h2 class="title"><?php echo esc_html__( 'Points Addition / Deduction Messages', 'direktt-loyalty-program' ); ?></h2>
             <table class="form-table direktt-loyalty-program-table">
                 <tr>
-                    <th scope="row"><label for="direktt_loyalty_user"><?php echo esc_html__( 'Enable', 'direktt-loyalty-program' ); ?></label></th>
+                    <th scope="row"><label for="direktt_loyalty_user"><?php echo esc_html__( 'Send to Subscriber', 'direktt-loyalty-program' ); ?></label></th>
                     <td>
                         <input type="checkbox" name="direktt_loyalty_user" id="direktt_loyalty_user" value="yes" <?php checked( $loyalty_user ); ?> />
-                        <label for="direktt_loyalty_user"><span class="description"><?php echo esc_html__( 'When enabled, a notification will be sent to the subscriber when points are added or deducted.', 'direktt-loyalty-program' ); ?></span></label>
+                        <label for="direktt_loyalty_user"><span class="description"><?php echo esc_html__( 'When enabled, a message will be sent to the subscriber when points are added or deducted.', 'direktt-loyalty-program' ); ?></span></label>
                     </td>
                 </tr>
                 <tr id="direktt-loyalty-program-settings-mt-user-change-row">
-                    <th scope="row"><label for="direktt_loyalty_user_template"><?php echo esc_html__( 'Message Template', 'direktt-loyalty-program' ); ?></label></th>
+                    <th scope="row"></th>
                     <td>
                         <select name="direktt_loyalty_user_template" id="direktt_loyalty_user_template">
-                            <option value="0"><?php echo esc_html__( 'Select Template', 'direktt-loyalty-program' ); ?></option>
+                            <option value="0"><?php echo esc_html__( 'Select Message Template', 'direktt-loyalty-program' ); ?></option>
                             <?php foreach ( $template_posts as $post ) : ?>
                                 <option value="<?php echo esc_attr( $post->ID ); ?>" <?php selected( $loyalty_user_template, $post->ID ); ?>>
                                     <?php echo esc_html( $post->post_title ); ?>
@@ -271,21 +269,18 @@ function render_loyalty_program_settings() {
                         <p class="description"><code><?php echo esc_html( '#points#' ); ?></code><?php echo esc_html__( ' - new points balance', 'direktt-loyalty-program' ); ?></p>
                     </td>
                 </tr>
-            </table>
-            <h3><?php echo esc_html__( 'Send Message to Admin', 'direktt-loyalty-program' ); ?></h3>
-            <table class="form-table direktt-loyalty-program-table">
                 <tr>
-                    <th scope="row"><label for="direktt_loyalty_admin"><?php echo esc_html__( 'Enable', 'direktt-loyalty-program' ); ?></label></th>
+                    <th scope="row"><label for="direktt_loyalty_admin"><?php echo esc_html__( 'Send to Admin', 'direktt-loyalty-program' ); ?></label></th>
                     <td>
                         <input type="checkbox" name="direktt_loyalty_admin" id="direktt_loyalty_admin" value="yes" <?php checked( $loyalty_admin ); ?> />
-                        <label for="direktt_loyalty_admin"><span class="description"><?php echo esc_html__( 'When enabled, a notification will be sent to the admin when points are added or deducted.', 'direktt-loyalty-program' ); ?></span></label>
+                        <label for="direktt_loyalty_admin"><span class="description"><?php echo esc_html__( 'When enabled, a message will be sent to the admin when points are added or deducted.', 'direktt-loyalty-program' ); ?></span></label>
                     </td>
                 </tr>
                 <tr id="direktt-loyalty-program-settings-mt-admin-change-row">
-                    <th scope="row"><label for="direktt_loyalty_admin_template"><?php echo esc_html__( 'Message Template', 'direktt-loyalty-program' ); ?></label></th>
+                    <th scope="row"></th>
                     <td>
                         <select name="direktt_loyalty_admin_template" id="direktt_loyalty_admin_template">
-                            <option value="0"><?php echo esc_html__( 'Select Template', 'direktt-loyalty-program' ); ?></option>
+                            <option value="0"><?php echo esc_html__( 'Select Message Template', 'direktt-loyalty-program' ); ?></option>
                             <?php foreach ( $template_posts as $post ) : ?>
                                 <option value="<?php echo esc_attr( $post->ID ); ?>" <?php selected( $loyalty_admin_template, $post->ID ); ?>>
                                     <?php echo esc_html( $post->post_title ); ?>
@@ -300,21 +295,20 @@ function render_loyalty_program_settings() {
                     </td>
                 </tr>
             </table>
-            <h3><?php echo esc_html__( 'Points Reset', 'direktt-loyalty-program' ); ?></h3>
-            <h3><?php echo esc_html__( 'Send Message to Subscriber', 'direktt-loyalty-program' ); ?></h3>
+            <h2 class="title"><?php echo esc_html__( 'Points Reset Messages', 'direktt-loyalty-program' ); ?></h2>
             <table class="form-table direktt-loyalty-program-table">
                 <tr>
-                    <th scope="row"><label for="direktt_loyalty_user_reset"><?php echo esc_html__( 'Enable', 'direktt-loyalty-program' ); ?></label></th>
+                    <th scope="row"><label for="direktt_loyalty_user_reset"><?php echo esc_html__( 'Send to Subscriber', 'direktt-loyalty-program' ); ?></label></th>
                     <td>
                         <input type="checkbox" name="direktt_loyalty_user_reset" id="direktt_loyalty_user_reset" value="yes" <?php checked( $loyalty_user_reset ); ?> />
-                        <label for="direktt_loyalty_user_reset"><span class="description"><?php echo esc_html__( 'When enabled, a notification will be sent to the subscriber when points are reset.', 'direktt-loyalty-program' ); ?></span></label>
+                        <label for="direktt_loyalty_user_reset"><span class="description"><?php echo esc_html__( 'When enabled, a message will be sent to the subscriber when points are reset.', 'direktt-loyalty-program' ); ?></span></label>
                     </td>
                 </tr>
                 <tr id="direktt-loyalty-program-settings-mt-user-reset-row">
-                    <th scope="row"><label for="direktt_loyalty_user_template_reset"><?php echo esc_html__( 'Message Template', 'direktt-loyalty-program' ); ?></label></th>
+                    <th scope="row"></th>
                     <td>
                         <select name="direktt_loyalty_user_template_reset" id="direktt_loyalty_user_template_reset">
-                            <option value="0"><?php echo esc_html__( 'Select Template', 'direktt-loyalty-program' ); ?></option>
+                            <option value="0"><?php echo esc_html__( 'Select Message Template', 'direktt-loyalty-program' ); ?></option>
                             <?php foreach ( $template_posts as $post ) : ?>
                                 <option value="<?php echo esc_attr( $post->ID ); ?>" <?php selected( $loyalty_user_template_reset, $post->ID ); ?>>
                                     <?php echo esc_html( $post->post_title ); ?>
@@ -325,21 +319,18 @@ function render_loyalty_program_settings() {
                         <p class="description"><code><?php echo esc_html( '#points#' ); ?></code> <?php echo esc_html__( ' - new points balance', 'direktt-loyalty-program' ); ?></p>
                     </td>
                 </tr>
-            </table>
-            <h3><?php echo esc_html__( 'Send Message to Admin', 'direktt-loyalty-program' ); ?></h3>
-            <table class="form-table direktt-loyalty-program-table">
                 <tr>
-                    <th scope="row"><label for="direktt_loyalty_admin_reset"><?php echo esc_html__( 'Enable', 'direktt-loyalty-program' ); ?></label></th>
+                    <th scope="row"><label for="direktt_loyalty_admin_reset"><?php echo esc_html__( 'Send to Admin', 'direktt-loyalty-program' ); ?></label></th>
                     <td>
                         <input type="checkbox" name="direktt_loyalty_admin_reset" id="direktt_loyalty_admin_reset" value="yes" <?php checked( $loyalty_admin_reset ); ?> />
-                        <label for="direktt_loyalty_admin_reset"><span class="description"><?php echo esc_html__( 'When enabled, a notification will be sent to the admin when points are reset.', 'direktt-loyalty-program' ); ?></span></label>
+                        <label for="direktt_loyalty_admin_reset"><span class="description"><?php echo esc_html__( 'When enabled, a message will be sent to the admin when points are reset.', 'direktt-loyalty-program' ); ?></span></label>
                     </td>
                 </tr>
                 <tr id="direktt-loyalty-program-settings-mt-admin-reset-row">
-                    <th scope="row"><label for="direktt_loyalty_admin_template_reset"><?php echo esc_html__( 'Message Template', 'direktt-loyalty-program' ); ?></label></th>
+                    <th scope="row"></th>
                     <td>
                         <select name="direktt_loyalty_admin_template_reset" id="direktt_loyalty_admin_template_reset">
-                            <option value="0"><?php echo esc_html__( 'Select Template', 'direktt-loyalty-program' ); ?></option>
+                            <option value="0"><?php echo esc_html__( 'Select Message Template', 'direktt-loyalty-program' ); ?></option>
                             <?php foreach ( $template_posts as $post ) : ?>
                                 <option value="<?php echo esc_attr( $post->ID ); ?>" <?php selected( $loyalty_admin_template_reset, $post->ID ); ?>>
                                     <?php echo esc_html( $post->post_title ); ?>
