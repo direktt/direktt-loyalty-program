@@ -210,7 +210,7 @@ function render_loyalty_program_settings() {
                                     return `
                                 <div class="direktt-loyalty-program-points-rule" style="margin-bottom:8px;">
                                     <label>
-                                        <input type="number" name="direktt_loyalty_points_rules[]" class="small-text" value="${value ? value : 1}" placeholder="Points" min="1" />
+                                        <input type="number" name="direktt_loyalty_points_rules[]" class="small-text ${value < 0 ? 'direktt-loyalty-program-rule-negative' : 'direktt-loyalty-program-rule-positive'}" value="${value ? value : 1}" placeholder="Points" />
                                     </label>
                                     <a class="dashicons dashicons-no button-link-delete direktt_loyalty_program_remove_points_rule" title="Remove"></a>
                                 </div>`;
