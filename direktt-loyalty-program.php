@@ -417,7 +417,7 @@ function render_loyalty_program_tool() {
             $change       = intval( $_POST['points_change'] );
             $user_points += $change;
             update_post_meta( $user_id, 'direktt_loyalty_points', $user_points );
-            global $direktt_user;
+            $direktt_user = Direktt_User::direktt_get_current_user();;
             $admin_id     = $direktt_user['ID'];
             $transaction  = array(
                 'admin_id'    => $admin_id,
@@ -466,7 +466,7 @@ function render_loyalty_program_tool() {
 
         if ( isset( $_POST['reset_points'] ) && $_POST['reset_points'] === '1' ) {
             update_post_meta( $user_id, 'direktt_loyalty_points', $initial_points );
-            global $direktt_user;
+            $direktt_user = Direktt_User::direktt_get_current_user();;
             $admin_id    = $direktt_user['ID'];
             $transaction = array(
                 'admin_id'    => $admin_id,
@@ -627,7 +627,7 @@ function render_loyalty_program_tool() {
                     <?php endforeach; ?>
                 </div>
             <?php } ?>
-            <button name="reset_points_btn" id="reset_points_btn" class="button-green"><?php echo esc_html__( 'Reset points', 'direktt-loyalty-program' ); ?></button>
+            <button name="reset_points_btn" id="reset_points_btn" class="button-primary button-large"><?php echo esc_html__( 'Reset points', 'direktt-loyalty-program' ); ?></button>
         </form>
         <?php
         $transactions = get_post_meta( $user_id, 'direktt_loyalty_transactions', true );
