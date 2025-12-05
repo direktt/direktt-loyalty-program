@@ -73,20 +73,20 @@ function direktt_loyalty_program_activation_check() {
     }
 }
 
-add_action( 'direktt_setup_settings_pages', 'setup_loyalty_program_settings_page' );
+add_action( 'direktt_setup_settings_pages', 'direktt_loyalty_program_setup_settings_page' );
 
-function setup_loyalty_program_settings_page() {
+function direktt_loyalty_program_setup_settings_page() {
     Direktt::add_settings_page(
         array(
             'id'       => 'loyalty-program',
             'label'    => __( 'Loyalty Program Settings', 'direktt-loyalty-program' ),
-            'callback' => 'render_loyalty_program_settings',
+            'callback' => 'direktt_loyalty_program_render_settings',
             'priority' => 2,
         )
     );
 }
 
-function render_loyalty_program_settings() {
+function direktt_loyalty_program_render_settings() {
     if ( ! current_user_can( 'manage_options' ) ) {
         wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'direktt-loyalty-program' ) );
     }
@@ -356,9 +356,9 @@ function render_loyalty_program_settings() {
 	<?php
 }
 
-add_action( 'direktt_setup_profile_tools', 'setup_loyalty_program_profile_tools' );
+add_action( 'direktt_setup_profile_tools', 'direktt_loyalty_program_setup_profile_tools' );
 
-function setup_loyalty_program_profile_tools() {
+function direktt_loyalty_program_setup_profile_tools() {
     $selected_category = intval( get_option( 'direktt_loyalty_program_categories', 0 ) );
     $selected_tag      = intval( get_option( 'direktt_loyalty_program_tags', 0 ) );
 
@@ -380,7 +380,7 @@ function setup_loyalty_program_profile_tools() {
         array(
             'id'         => 'loyalty-program-tool',
             'label'      => __( 'Loyalty Program', 'direktt-loyalty-program' ),
-            'callback'   => 'render_loyalty_program_tool',
+            'callback'   => 'direktt_loyalty_program_render_profile_tool',
             'categories' => $category_slug ? array( $category_slug ) : array(),
             'tags'       => $tag_slug ? array( $tag_slug ) : array(),
             'priority'   => 2,
@@ -388,7 +388,7 @@ function setup_loyalty_program_profile_tools() {
     );
 }
 
-function render_loyalty_program_tool() {
+function direktt_loyalty_program_render_profile_tool() {
     $subscription_id = isset( $_GET['subscriptionId'] ) ? sanitize_text_field( wp_unslash( $_GET['subscriptionId'] ) ) : false;
     $profile_user    = Direktt_User::get_user_by_subscription_id( $subscription_id );
     if ( ! $profile_user ) {
@@ -722,7 +722,7 @@ function direktt_loyalty_add_meta_box() {
     add_meta_box(
         'direktt_loyalty_program_meta_box',
         esc_html__( 'Loyalty Program', 'direktt-loyalty-program' ) . '<div class="direktt-loyalty-current-points">' . esc_html__( 'Current Points:', 'direktt-loyalty-program' ) . '<strong>'. esc_html( $user_points ) . '</strong></div>',
-        'render_loyalty_program_meta_box',
+        'direktt_loyalty_program_render_meta_box',
         'direkttusers',
         'advanced',
         'default'
@@ -731,7 +731,7 @@ function direktt_loyalty_add_meta_box() {
 
 add_action( 'add_meta_boxes', 'direktt_loyalty_add_meta_box' );
 
-function render_loyalty_program_meta_box( $post ) {
+function direktt_loyalty_program_render_meta_box( $post ) {
     $user_id        = $post->ID;
     $user_points    = intval( get_post_meta( $user_id, 'direktt_loyalty_points', true ) );
     $initial_points = intval( get_option( 'direktt_loyalty_program_initial_points', 0 ) );
@@ -797,7 +797,7 @@ function render_loyalty_program_meta_box( $post ) {
 	<?php
 }
 
-function loyalty_program_service_shortcode() {
+function direktt_loyalty_program_service_shortcode() {
 	$user         = wp_get_current_user();
 	$direktt_user = Direktt_User::get_direktt_user_by_wp_user( $user );
 	if ( ! $direktt_user ) {    
@@ -878,4 +878,4 @@ function loyalty_program_service_shortcode() {
     return ob_get_clean();
 }
 
-add_shortcode( 'direktt_loyalty_program_service', 'loyalty_program_service_shortcode' );
+add_shortcode( 'direktt_loyalty_program_service', 'direktt_loyalty_program_service_shortcode' );
