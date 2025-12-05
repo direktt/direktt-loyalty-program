@@ -623,7 +623,7 @@ function direktt_loyalty_program_render_profile_tool() {
                 sort( $positive_rules, SORT_NUMERIC );
                 ?>
                 <div class="direktt-loyalty-program-rules">
-                    <?
+                    <?php
                     foreach ( $negative_rules as $negative_rule ) {
                         ?>
                         <button name="points_change_btn" value="<?php echo esc_attr( $negative_rule ); ?>" class="button-red"><?php echo esc_html( $negative_rule ); ?></button>
@@ -816,8 +816,6 @@ function direktt_loyalty_program_service_shortcode() {
     $transactions = get_post_meta( $direktt_user['ID'], 'direktt_loyalty_transactions', true );
     if ( ! is_array( $transactions ) ) {
         $transactions = array();
-
-        ob_start();
         echo '<div id="direktt-profile-wrapper">';
 			echo '<div class="" id="direktt-profile">';
 				echo '<div class="direktt-profile-data-loyalty-program-tool direktt-service" id="direktt-profile-data">';
@@ -835,7 +833,6 @@ function direktt_loyalty_program_service_shortcode() {
         $transactions = array_reverse( $transactions );
         $transactions = array_slice( $transactions, 0, 20 );
 
-        ob_start();
         echo '<div id="direktt-profile-wrapper">';
 			echo '<div class="" id="direktt-profile">';
 				echo '<div class="direktt-profile-data-loyalty-program-tool direktt-service" id="direktt-profile-data">';
@@ -876,7 +873,9 @@ function direktt_loyalty_program_service_shortcode() {
 			echo '</div>';
         echo '</div>';
     }
+
+    echo '</div>';
     return ob_get_clean();
 }
 
-add_shortcode( 'direktt_loyalty_program', 'direktt_loyalty_program_service_shortcode' );
+add_shortcode( 'direktt_loyalty_program_service', 'direktt_loyalty_program_service_shortcode' );
