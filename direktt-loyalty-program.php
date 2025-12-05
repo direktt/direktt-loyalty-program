@@ -706,7 +706,7 @@ function direktt_loyalty_program_render_profile_tool() {
 	<?php
 }
 
-function direktt_loyalty_add_meta_box() {
+function direktt_loyalty_program_add_meta_box() {
 
     global $post;
 
@@ -729,7 +729,7 @@ function direktt_loyalty_add_meta_box() {
     );
 }
 
-add_action( 'add_meta_boxes', 'direktt_loyalty_add_meta_box' );
+add_action( 'add_meta_boxes', 'direktt_loyalty_program_add_meta_box' );
 
 function direktt_loyalty_program_render_meta_box( $post ) {
     $user_id        = $post->ID;
