@@ -651,7 +651,7 @@ function direktt_loyalty_program_render_profile_tool() {
         if ( empty( $transactions ) ) {
             echo '<div class="direktt-loyalty-program-transactions">';
             echo '<h3>' . esc_html__( 'Recent Transactions', 'direktt-loyalty-program' ) . '</h3>';
-            echo '<p>' . esc_html__( 'No transactions found.', 'direktt-loyalty-program' ) . '</p>';
+            echo '<p>' . esc_html__( 'No transactions found', 'direktt-loyalty-program' ) . '</p>';
             echo '</div>';
         } else {
             $transactions = array_reverse( $transactions );
@@ -672,7 +672,7 @@ function direktt_loyalty_program_render_profile_tool() {
             echo '<tbody>';
 
             foreach ( $transactions as $transaction ) {
-                $date         = human_time_diff( $transaction['timestamp'] ) . ' ago';
+                $date         = human_time_diff( $transaction['timestamp'] ) . __( ' ago', 'direktt-loyalty-program' );
                 $change       = $transaction['change'];
                 $new_balance  = $transaction['new_balance'];
                 $admin_id     = $transaction['admin_id'];
@@ -769,14 +769,14 @@ function direktt_loyalty_program_render_meta_box( $post ) {
 					} else {
 						$display_name = esc_html__( 'Unknown', 'direktt-loyalty-program' );
 					}
-					$date        = wp_date( 'Y-m-d H:i:s', $transaction['timestamp'] );
+					$date        = human_time_diff( $transaction['timestamp'] ) . __( ' ago', 'direktt-loyalty-program' );
 					$change      = $transaction['change'];
 					$new_balance = $transaction['new_balance'];
 
 					echo '<tr>';
 					echo '<td class="direktt-loyalty-program-points">';
 					if ( $change === 'reset' ) {
-						esc_html_e( 'Reset', 'direktt-loyalty-program' );
+						echo ( '<strong>' . esc_html__( 'Reset', 'direktt-loyalty-program' ) . '</strong>' );
 					} else {
 						echo ( '<strong>' . ( $change > 0 ? esc_html( '+' ) : '' ) . esc_html( $change ) . '</strong>' );
 					}
@@ -789,7 +789,7 @@ function direktt_loyalty_program_render_meta_box( $post ) {
 					echo '</tbody>';
                 echo '</table>';
             } else {
-                echo '<p>' . esc_html__( 'No transactions found.', 'direktt-loyalty-program' ) . '</p>';
+                echo '<p class="direktt-loyalty-program-no-transactions">' . esc_html__( 'No transactions found', 'direktt-loyalty-program' ) . '</p>';
             }
             ?>
         </div>
@@ -824,7 +824,7 @@ function direktt_loyalty_program_service_shortcode() {
 						echo '<p>' . esc_html__( 'Points: ', 'direktt-loyalty-program' ) . '<strong>' . esc_html( $points ) . '</strong></p>';
 					echo '</div>';
 					echo '<div class="direktt-loyalty-program-transactions">';
-						echo '<p>' . esc_html__( 'No transactions found.', 'direktt-loyalty-program' ) . '</p>';
+						echo '<p>' . esc_html__( 'No transactions found', 'direktt-loyalty-program' ) . '</p>';
 					echo '</div>';
 				echo '</div>';
 			echo '</div>';
@@ -851,13 +851,13 @@ function direktt_loyalty_program_service_shortcode() {
 							echo '</thead>';
 							echo '<tbody>';
 							foreach ( $transactions as $transaction ) {
-								$date        = wp_date( 'Y-m-d H:i:s', $transaction['timestamp'] );
+								$date        = human_time_diff( $transaction['timestamp'] ) . __( ' ago', 'direktt-loyalty-program' );
 								$change      = $transaction['change'];
 								$new_balance = $transaction['new_balance'];
 								echo '<tr>';
 								echo '<td>';
 								if ( $change === 'reset' ) {
-									esc_html_e( 'Reset', 'direktt-loyalty-program' );
+									echo ( '<strong>' . esc_html__( 'Reset', 'direktt-loyalty-program' ) . '</strong>' );
 								} else {
 									echo ( '<strong>' . ( $change > 0 ? esc_html( '+' ) : '' ) . esc_html( $change ) . '</strong>' );
 								}
