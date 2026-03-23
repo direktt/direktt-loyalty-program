@@ -711,8 +711,11 @@ function direktt_loyalty_program_render_profile_tool() {
 }
 
 function direktt_loyalty_program_add_meta_box() {
-
 	global $post;
+
+	if ( ! $post ) {
+		return;
+	}
 
 	$user_id        = $post->ID;
 	$user_points    = intval( get_post_meta( $user_id, 'direktt_loyalty_points', true ) );
@@ -854,22 +857,22 @@ function direktt_loyalty_program_service_shortcode() {
 								echo '</tr>';
 							echo '</thead>';
 							echo '<tbody>';
-		foreach ( $transactions as $transaction ) {
-			$date        = human_time_diff( $transaction['timestamp'] ) . __( ' ago', 'direktt-loyalty-program' );
-			$change      = $transaction['change'];
-			$new_balance = $transaction['new_balance'];
-			echo '<tr>';
-			echo '<td>';
-			if ( $change === 'reset' ) {
-				echo ( '<strong>' . esc_html__( 'Reset', 'direktt-loyalty-program' ) . '</strong>' );
-			} else {
-				echo ( '<strong>' . ( $change > 0 ? esc_html( '+' ) : '' ) . esc_html( $change ) . '</strong>' );
-			}
-			echo '</td>';
-			echo '<td>' . esc_html( $date ) . '</td>';
-			echo '<td>' . esc_html( $new_balance ) . '</td>';
-			echo '</tr>';
-		}
+								foreach ( $transactions as $transaction ) {
+									$date        = human_time_diff( $transaction['timestamp'] ) . __( ' ago', 'direktt-loyalty-program' );
+									$change      = $transaction['change'];
+									$new_balance = $transaction['new_balance'];
+									echo '<tr>';
+									echo '<td>';
+									if ( $change === 'reset' ) {
+										echo ( '<strong>' . esc_html__( 'Reset', 'direktt-loyalty-program' ) . '</strong>' );
+									} else {
+										echo ( '<strong>' . ( $change > 0 ? esc_html( '+' ) : '' ) . esc_html( $change ) . '</strong>' );
+									}
+									echo '</td>';
+									echo '<td>' . esc_html( $date ) . '</td>';
+									echo '<td>' . esc_html( $new_balance ) . '</td>';
+									echo '</tr>';
+								}
 							echo '</tbody>';
 						echo '</table>';
 					echo '</div>';
